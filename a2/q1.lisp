@@ -142,4 +142,8 @@
 ; It then carries out 
 ; - the required number of shuffles on the list, and 
 ;   returns the result.
-
+(defun nshuffle (shuffleFunc n L)
+  (if (eq n 0) L  ; basecase to return L, else, do 1 shuffle
+    (nshuffle shuffleFunc (- n 1) (funcall shuffleFunc L))
+    )
+)
