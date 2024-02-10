@@ -147,3 +147,10 @@
     (nshuffle shuffleFunc (- n 1) (funcall shuffleFunc L))
     )
 )
+
+;As part of your testing of howManyShuffles, try to find out:
+; i) How many out-shuffles are required to 
+;    return a stack of 52 cards to its original ordering?
+; ii) How many in-shuffles are required to 
+;    completely reverse a stack of 52 cards?
+;
