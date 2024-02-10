@@ -92,15 +92,15 @@
   ; listPair - a dotted pair representing two stacks
   ; n - number of where from stk2 should put after stk1
   (defun split_help (listPair n)
-    (if (eq 0 n) listPair  ; start from idx=0, directly 
-      ; else, when n is some idx,
-      ; move 1 card from 2nd pile to 1st pile, then keep going.
-      (split_help 
-        (cons 
-          (cons (cadr listPair) (car listPair))
-          (cddr listPair) )
-        (- n 1)  ; mark the progress
-      ) ) ) ; note, stk1 is in reverse order
+    (cond ((eq 0 n) listPair ) ; start from idx=0, directly 
+          ((null (cdr listPair)) listPair) 
+      ; if stack2 is empty, don't go further; else, 
+      (t (split_help 
+            (cons    ; move 1 card from stk2 to stk1
+              (cons (cadr listPair) (car listPair))
+              (cddr listPair) )
+            (- n 1)  ; mark the progress
+    ) ) ) ) ; note, stk1 is in reverse order
 
   (let
     (   
