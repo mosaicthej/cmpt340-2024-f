@@ -131,4 +131,15 @@
   (doFaro L nil)
 )
 
+; (d) [10 Points]. 
+; Write a polymorphic function, 
+; nshuffle, 
+; which takes three parameters,
+; - a shuffle function (such as outshuffle or inshuffle), 
+; - an integer indicating how many shuffles to carry out, 
+; - and a list to shuffle, which is of even length.   
+; 
+; It then carries out 
+; - the required number of shuffles on the list, and 
+;   returns the result.
 
