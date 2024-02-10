@@ -67,3 +67,48 @@
   t
 )
 
+;(b) [7 Points]. 
+; Write a polymorphic function, split, 
+; which takes as parameters a list 
+; and an Integer n, indicating the splitting point.  
+;
+; It splits the contents of the provided list into two lists, 
+;  the first with the first n elements of the list (in order), 
+;  and the second with the remaining elements (again, in order).  
+; These two lists are then returned as a list of two lists.
+(defun split (L n)
+  ;@args:
+  ; L   - remaining list
+  ; acc - progress-so-far 
+  (defun rev (L)
+    (defun revi (L0 acc) 
+      (if (null L0) acc
+        (revi (cdr L0) (cons (car L0) acc) )))
+    (revi L nil)
+  )
+  
+
+  ;@args:
+  ; listPair - a dotted pair representing two stacks
+  ; n - number of where from stk2 should put after stk1
+  (defun split_help (listPair n)
+    (if (eq 0 n) listPair  ; start from idx=0, directly 
+      ; else, when n is some idx,
+      ; move 1 card from 2nd pile to 1st pile, then keep going.
+      (split_help 
+        (cons 
+          (cons (cadr listPair) (car listPair))
+          (cddr listPair) )
+        (- n 1)  ; mark the progress
+      ) ) ) ; note, stk1 is in reverse order
+
+  (let
+    (   
+      (pair (split_help (cons nil L) n) )   
+    )
+    (cons (rev (car pair)) (cons (cdr pair) nil) )
+    ; return a list of both stacks... both in-order...
+  )
+
+)
+
