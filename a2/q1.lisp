@@ -114,18 +114,21 @@
 ; in-shuffle:
 ; → 1  2  3
 ; 4  5  6 ←
-
-(defun outShuffle (L)
+(defun doFaro (L outsflP)
   (let ( (brk (split L (/ (alen L) 2))) )
     ; brk is the breaked up deck
-    (shuffle (car brk) (cadr brk))
+    (if outsflP
+        (shuffle (car brk) (cadr brk))
+        (shuffle (cadr brk) (car brk)) )
     )
 )
 
-(defun inShuffle (L)
-  (let ( (brk (split L (/ (alen L) 2))) )
-  ; brk is the breaked up deck
-  (shuffle (cadr brk) (car brk))
-  )
+(defun outShuffle (L)
+  (doFaro L t)
 )
+
+(defun inShuffle (L)
+  (doFaro L nil)
+)
+
 
