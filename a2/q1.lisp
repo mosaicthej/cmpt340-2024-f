@@ -128,3 +128,14 @@
 ; break them up and return the result of applying the 
 ;  required type of Faro shuffle exactly once.
 ;
+; say, have (1 2 3 4 5 6)
+; break into (1 2 3) (4 5 6)
+; out-shuffle:
+; ↓
+; 1  2  3
+;  4  5  6 ←
+;
+; in-shuffle:
+; → 1  2  3
+; 4  5  6 ←
+
