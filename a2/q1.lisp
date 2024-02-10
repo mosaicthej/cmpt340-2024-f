@@ -86,8 +86,11 @@
 )
 
 
-
-
+; macro that counts (one 1 level) the number of things in list
+(defun alen (L) 
+  (defun aalen (L n) (if (null L) n (aalen (cdr L) (+ n 1))))
+  (aalen L 0)
+)
 ; (c) [8 Points]. 
 ; Write two polymorphic functions, 
 ; outshuffle and inshuffle, 
