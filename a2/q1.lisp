@@ -112,3 +112,19 @@
 
 )
 
+
+
+
+; (c) [8 Points]. 
+; Write two polymorphic functions, 
+; outshuffle and inshuffle, 
+; which use shuffle and split functions described above 
+; (and possibly additional intermediary functions), 
+; and carry out perfect Faro shuffles of the 
+;  out-shuffle and in-shuffle type.  
+;
+; In other words, 
+; they take a single stack of an even number of cards, 
+; break them up and return the result of applying the 
+;  required type of Faro shuffle exactly once.
+;
