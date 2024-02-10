@@ -115,3 +115,17 @@
 ; → 1  2  3
 ; 4  5  6 ←
 
+(defun outShuffle (L)
+  (let ( (brk (split L (/ (alen L) 2))) )
+    ; brk is the breaked up deck
+    (shuffle (car brk) (cadr brk))
+    )
+)
+
+(defun inShuffle (L)
+  (let ( (brk (split L (/ (alen L) 2))) )
+  ; brk is the breaked up deck
+  (shuffle (cadr brk) (car brk))
+  )
+)
+
