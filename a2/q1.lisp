@@ -33,33 +33,6 @@
    )
 )
 
-(defun shuffle_test1 ()
-  (let (
-        (A '(1 2 3 4))
-        (B '(a b c d))
-       )
-    (shuffle A B)
-  )
-)
-
-(defun shuffle_test2 ()
-  (let (
-        (A '(1 2 3 4))
-        (B '(a b c d X Y Z K))
-       )
-    (shuffle A B)
-  )
-)
-
-(defun shuffle_test3 ()
-  (let (
-        (A '(1 2 3 4 5 6 7 8))
-        (B '(a b c d))
-       )
-    (shuffle A B)
-  )
-)
-
 (defun shuffle_test ()
   (print (shuffle '(1 2 3) '(a b c)))
   (print (shuffle '(1 2 3) '(a b c d e)))
