@@ -194,19 +194,17 @@
 ; testing outshuffle which restores the order of cards
 ; first find the k that (2^k \equiv 1 (mod n-1))
 ; (2 is coprime with all odd numbers, so must be a match)
-; then print the original deck, the 
+; then return the shuffled deck.
+; enable trace on nshuffle or outshuffle to see trace.
 (defun outshuffle_res (n) ; testing with n cards
   (if (eq (mod n 2) 1) nil ; has to be even number
     (let (  (cards (gennL n) )
             (k (mord (- n 1) 2))  )
       ; now, if we shuffle k times, it will restore.
       ; return the result of outshuffle k times
-      ; also return k
-      (cons k (cons (nshuffle 'outshuffle k cards) nil))
-    )
-  )
-)
-
+      ; also return (as a dotted pair)
+      (cons k 
+        (cons (nshuffle 'outshuffle k cards) nil)))))
 ; For using in-shuffle to acheive reverse-order, 
 ; perform x in-shuffle where: $ 2^x \equiv n (mod n+1) $
 ; It can proved with some Discrete logarithm theories
@@ -227,7 +225,6 @@
 )
 
 ; testing inshuffle which restores the order of cards
-; 
 
 
 ; Below are code that gets you a real deck 
