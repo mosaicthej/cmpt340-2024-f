@@ -229,7 +229,7 @@
 ; (in case that it fails, return nil)
 ; then print the cards after shuffle (should be in reverse)
 ; enable trace on nshuffle or inshuffle to see trace
-(defun inshuffle_res (n)
+(defun inshuffle_rev (n)
   (if (eq (mod n 2) 1) nil
     (let (  (cards (gennL n))  
             (k (drom (+ n 1) 2))  )
