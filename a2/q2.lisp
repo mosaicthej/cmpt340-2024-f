@@ -76,6 +76,58 @@
               (cons (caddr current) stack)))))))
   (rev(preOrderProc nil Tree nil) )); initialize
 
+; inorder (LNR)
+;  recurse on left
+;  visit node
+;  recurse on right
+; the current implementation is not efficient...
+; using append repetitively results in O(n^2)
+; Adding another stack of counting how many to pop at a time, will add 
+; space usage of O(n) and make time in O(n)...
+; ihgfedcba <=> 4 1 1 3: abcdefghi
+;
+; Need 2 visit stack + 1 pending stack (+ 1 counting stack)
+; things on visit stack goes into visit queue, (VAL type)
+; things on pending stack is what would be visited next. (TREE type)
+(defun inOrder(Tree) 
+  (defun inOrderProc (cur vis vstk1 vstk2 pendstk) 
+    (if (treeEmptyP cur) vis ; base case
+      (let ( (hasLeft (not (treeEmptyP (left cur)))) 
+             (hasRight (not (treeEmptyP (right cur))))
+             (hasBoth (and (not (treeEmptyP (left cur))) 
+                           (not (treeEmptyP (right cur)))))
+             (noLeft (treeEmptyP (left cur)))  
+             (noRIght (treeEmptyP (right cur)))  
+             (pureLeaf (and (treeEmptyP(left cur)) 
+                            (treeEmptyP(right cur))))  )
+      ; define the parameters to be passed to next call.
+      ; this is the most headache part...
+        (let (
+          (curN ; next current (as TREE)
+            (if hasLeft (left cur) ; has left, next goes to left
+              (if noRight (car pendstk) ; pure leaf? pop pendStk
+                (right cur) ))); only right, next goes to right.
+          (visN ; changes to visit queue: (as NODEVAL)
+            (if hasLeft vis ; if there keep going left, visQ remain same
+              (append ; when has no left (on return)
+                vis ;keep the visited
+                (cons (nodeval cur) vstk2) ; secondary stack + self
+                (if hasRight nil ; don't touch primary stack, else
+                  (list (car vstk1))) )))   ; pop 1 from primary stack              
+          (vstk1N ; changes to primary stack (as NODEVAL):
+            (cond (hasBoth (cons (nodeVal cur) vstk1)) ; push when both childs
+                  (pureLeaf (cdr vstk1)) ; pop when it's the leaf
+                  (t vstk1))) ; otherwise, no change on primary stack  
+          (vstk2N ; changes to secondary stack (as NODEVAL):
+            (cond (noLeft nil) ; pop all secondary stack if noLeft
+                  (hasBoth vstk2) ;if hasBoth, cur in prmStk already. nochange
+                  (t (cons (nodeVal cur) vstk2)))); hasLeft x noRight, push 1
+          (pendstkN ; changes to pending stack (as TREE):
+            (cond (hasBoth (cons (right cur) pendStk)) ; push when has both
+                  (pureLeaf (cdr pendStk)) ; pop when pureleaf
+                  (t pendStk)))) ; otherwise, no change
+        (inOrderProc curN visN vstk1N vstk2N pendStkN))))) ; call next recurse
+  (inOrderProc Tree nil nil nil nil))
 
 ; (b) [5 Points]. 
 ; A polymorphic function, search, 
