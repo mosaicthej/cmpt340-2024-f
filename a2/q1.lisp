@@ -219,12 +219,15 @@
 ; $ r^x \equiv n-1 (mod n)
 (defun drom (n r)
   (defun droma (n r k v)
-    (if (> k n) 0 ; at most n iterations before looping
+    (if (> k n) nil ; at most n iterations before looping
       (if (eq (- n 1) (mod v n)) k ; found it!
         (droma n r (+ k 1) (* v r) ) ; keep going
       )))
   (droma n r 1 r)
 )
+
+; testing inshuffle which restores the order of cards
+; 
 
 
 ; Below are code that gets you a real deck 
