@@ -191,3 +191,26 @@
   (orda n r 1 r)
 )
 
+
+; Below are code that gets you a real deck 
+; (with suit and face)
+;
+; generating a suit (given the symbol and num per suit)
+(defun genSuitN (symbo n &optional accu)
+  (defun genSuita (accua n)
+    (if (eq n 0) accua
+      (genSuita (cons (cons n symbo) accua) ; put card in front
+                (- n 1))))
+  (genSuita accu n)
+)
+
+; more generic deck generation.
+; provide a list of "suits" as symbols
+;   and number of cards per suit
+(defun genDeckGeneric (ss nc)
+  (defun gdgAccu (ss nc accu)
+    (if (null ss) accu
+      (gdgAccu (cdr ss) nc 
+               (genSuitN (car ss) nc accu))))
+  (gdgAccu ss nc nil)
+)
