@@ -1,0 +1,4 @@
+.metals/*
+.scala-build/*
+.vscode/*
+test_q1.scala
