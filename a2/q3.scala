@@ -1,5 +1,6 @@
 import scala.annotation.tailrec
-class q3 {
+package q3
+class Q3 {
 /*
 Problem 3 [20 Points]. A higher-order function unfold can be defined as follows to encapsulate a pattern of recursion for producing a list:
 */

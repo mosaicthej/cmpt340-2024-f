@@ -1,4 +1,5 @@
-class q2 {
+package q2
+class Q2 {
 /* 
 ; Problem 2 [35 Points]. 
 ; Define a polymorphic Tree data type, 

@@ -1,4 +1,4 @@
-package runtime
+package Q1Test
 import q1.Q1
 
 object Q1Test extends App {
