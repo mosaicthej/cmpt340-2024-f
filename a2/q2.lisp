@@ -193,6 +193,17 @@
 ; — a Tree t, a value before, and a value after 
 ; — and returns t with ALL instances of 
 ;     before replaced with the value after.
+(defun replaceTr (Tr before after)
+  (cond ((null Tr) nil) ; done
+        ((eq (nodeVal Tr) before) ; find a match
+          (createTr 
+            (replaceTr (left Tr) before after) ; left
+            after
+            (replaceTr (right Tr) before after))) ; right
+        (t (createTr
+             (replaceTr (left Tr) before after)
+             (nodeVal Tr)
+             (replaceTr (right Tr) before after)))))
 
 ; [Hint: Model your Tree data type after the List data type presented in class.]
 
