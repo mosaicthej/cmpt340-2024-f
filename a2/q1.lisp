@@ -157,3 +157,15 @@
 ;    completely reverse a stack of 52 cards?
 ;
 ; I think there should be a closed-form formula...
+; yes... says here: 
+; - https://en.wikipedia.org/wiki/Faro_shuffle#Perfect_shuffles
+; - https://oeis.org/A002326
+; So, to restore the deck to original, need k shuffles where:
+; - outshuffle: $ 2^k \equiv 1 (mod n-1) $
+; - inshuffle : $ 2^k \equiv 1 (mod n+1) $
+; k is the multiplicative order of 2.
+;
+;
+; infact, any position for any card can be binary encoded...
+; This is fun... I'll look into it...
+; ... now just to demonstrate.
