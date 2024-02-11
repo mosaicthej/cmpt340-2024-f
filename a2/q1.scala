@@ -112,14 +112,14 @@ class Q1{
             if (n == 0 || listPair.tail.isEmpty) listPair
             else {
                 splitHelp(
-                    (listPair.tail.head :: listPair.head) :: listPair.tail.tail,
+                    (listPair.tail.head.head :: listPair.head) :: List(listPair.tail.head.tail),
                     n - 1
                 )
             }
         }
 
         val pair = splitHelp(List(Nil, L), n)
-        List(pair.head.reverse, pair.tail)
+        List(pair.head.reverse, pair.last)
     }
 
 

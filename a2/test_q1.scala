@@ -1,7 +1,7 @@
 package runtime
 import q1.Q1
 
-object Test {
+object Q1Test extends App {
   val q1Instance = new Q1()
   val shuffle: (List[Any], List[Any]) => List[Any] = q1Instance.shuffle
 
@@ -101,19 +101,19 @@ object Test {
     // Test case 3: 5 cards
     val input3 = 5
     val expected3 = List(1, 2, 3, 4, 5)
-    val result3 = gennL(input3)
+    val result3 = gennL(input3).reverse
     assert(result3 == expected3, s"Test case 3 failed: Expected $expected3, but got $result3")
 
     // Test case 4: 10 cards
     val input4 = 10
     val expected4 = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-    val result4 = gennL(input4)
+    val result4 = gennL(input4).reverse
     assert(result4 == expected4, s"Test case 4 failed: Expected $expected4, but got $result4")
 
     println("All genCardL test cases passed!")
 
     /* defining some suits here */
-    val suits = List(Symbol("hearts"), Symbol("diamonds"), Symbol("clubs"), Symbol("spades"))
+    val suits = List(Symbol("hearts"), Symbol("diamonds"), Symbol("clubs"), Symbol("spades")).reverse
     
     /* Try defining a suit with n cards */
     val suit = Symbol("hearts")
@@ -134,6 +134,7 @@ object Test {
     println("A deck of 13 cards for each suit: ")
     println(genDeckGeneric(suits, 13))
   }
+  testGenCards();
 
 
   val outshuffle: (List[Any]) => List[Any] = q1Instance.outshuffle
@@ -159,12 +160,13 @@ object Test {
     println("3 inshuffles: ")
     println(nShuffledDeck2)
     val nShuffleDeck3 = nshuffle(outshuffle, 8, deck)
-    println("8 outshuffles: ")
+    println("8 outshuffles: You can expect the cards are in-order")
     println(nShuffleDeck3)
     val nShuffleDeck4 = nshuffle(inshuffle, 52, deck)
-    println("52 inshuffles: ")
+    println("52 inshuffles: You can expect the cards are in-order")
     println(nShuffleDeck4)
   }
+  showFaro()
   
   /* finds the number of outshuffle same order, and inshuffle get reverse */
   val outshuffleResCard: (List[Any]) => (Int, List[Any]) = q1Instance.outshuffleResCard
@@ -172,13 +174,14 @@ object Test {
   def showOutInShuffleResRev(): Unit = {
     val deck = genDeckGeneric(List(Symbol("hearts"), Symbol("diamonds"), Symbol("clubs"), Symbol("spades")), 13)
     val (outRes, outResDeck) = outshuffleResCard(deck)
-    println("Outshuffle result: ")
+    println("Outshuffle result: You can expect the cards are in-order")
     println(outRes)
     println(outResDeck)
     val (inRes, inResDeck) = inshuffleRevCard(deck)
-    println("Inshuffle result: ")
+    println("Inshuffle result: You can expect the cards are reversed")
     println(inRes)
     println(inResDeck)
   }
+  showOutInShuffleResRev()
   
 }
