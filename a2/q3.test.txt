@@ -10,12 +10,4 @@ Testing int2bin:
 Testing repHalve:
 Input list: List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
 repHalve with List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
-h with List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
-t with List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
-h with List(9, 10, 11, 12, 13, 14, 15)
-t with List(9, 10, 11, 12, 13, 14, 15)
-h with List(13, 14, 15)
-t with List(13, 14, 15)
-h with List(15)
-t with List(15)
 Result: List(List(1, 2, 3, 4, 5, 6, 7, 8), List(9, 10, 11, 12), List(13, 14), List(15))
