@@ -178,3 +178,16 @@
   (rev (genna n nil))
 )
 
+; also a function that finds the multiplicative order
+; find x that: $ r^x \equiv 1 (mod n) $
+; in successive calls, 
+;   k is the count for exponent, and
+;   v is the value of $r^k$
+(defun mord (n r)
+  (defun orda (n r k v)
+    (if (> (gcd r n) 1) 0 ; mul ord exists only if n r coprime.
+      (if (eq 1 (mod v n)) k ; found it!
+        (orda n r (+ 1 k) (* v r) ))))
+  (orda n r 1 r)
+)
+
