@@ -179,6 +179,12 @@
 ; which takes two arguments 
 ; — a Tree and a key — and returns a boolean result
 ; based on whether the key is found in the tree.
+(defun searchTr (Tr key) ; preorder search... But whichever is fine.
+  (cond ((null Tr) nil) ; nope
+        ((eq (nodeVal Tr) key) t) ; found
+        (t (or
+            (searchTr (left Tr) key)
+            (searchTr (right Tr) key) ))))
 
 
 ; (c) [5 Points]. 
