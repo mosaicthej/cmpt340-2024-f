@@ -33,8 +33,18 @@
  F
  (nil G ((nil H nil) I nil))))
 
+; some access functions:
+; treeEmptyP -> returns if tree is empty
+(defun treeEmptyP (Tr) (null Tr))
 
-; preorder:
+; nodeVal -> node of tree
+(defun nodeval (Tr) (cadr Tr))
+; left -> left subtree
+(defun left (Tr) (car Tr))
+; right -> right subtree
+(defun right (Tr) (caddr Tr))
+
+; preorder (NLR)
 ;  Visit the current node (in the figure: position red).
 ;  Recursively traverse the current node's left subtree.
 ;  Recursively traverse the current node's right subtree.
