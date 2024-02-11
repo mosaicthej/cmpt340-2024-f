@@ -36,6 +36,11 @@
 ; some access functions:
 ; treeEmptyP -> returns if tree is empty
 (defun treeEmptyP (Tr) (null Tr))
+; create an empty tree:
+(defun createEmptyTr () nil)
+; create a tree (leftTr nodeVal rightTr)
+(defun createTr (lTr N rTr) 
+  (cons LTr (cons N (cons rTr nil))))
 
 ; nodeVal -> node of tree
 (defun nodeval (Tr) (cadr Tr))
@@ -43,6 +48,21 @@
 (defun left (Tr) (car Tr))
 ; right -> right subtree
 (defun right (Tr) (caddr Tr))
+
+;insert -> insert a number into the tree
+(defun insert (Tr num)
+  (cond 
+    ((treeEmptyP Tr) ; build root
+      (createTr (createEmptyTr) num (createEmptyTr)))
+    ((eq (nodeVal Tr) num) Tr) ; omit repeat
+    ((< (nodeVal Tr) num) ; insert num to right
+      (createTr (left Tr) (nodeVal Tr) (insert (right Tr) num) ))
+    (t (createTr (insert (left Tr) num) (nodeVal Tr) (right Tr)))))
+
+; insertL -> insert a list into tree. (on the order of the list)
+(defun insertL (Tr L)
+  (if (null L) Tr
+    (insertL (insert Tr (car L)) (cdr L)) ))
 
 ; preorder (NLR)
 ;  Visit the current node (in the figure: position red).
@@ -129,6 +149,7 @@
         (inOrderProc curN visN vstk1N vstk2N pendStkN))))) ; call next recurse
   (inOrderProc Tree nil nil nil nil))
 
+;
 ; (b) [5 Points]. 
 ; A polymorphic function, search, 
 ; which takes two arguments 
