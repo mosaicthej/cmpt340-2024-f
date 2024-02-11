@@ -225,6 +225,17 @@
 )
 
 ; testing inshuffle which restores the order of cards
+; first fird k such that $ 2^k \ equiv n (mod n+1) $
+; (in case that it fails, return nil)
+; then print the cards after shuffle (should be in reverse)
+; enable trace on nshuffle or inshuffle to see trace
+(defun inshuffle_res (n)
+  (if (eq (mod n 2) 1) nil
+    (let (  (cards (gennL n))  
+            (k (drom (+ n 1) 2))  )
+      (if (null k) nil  ; in case can't do.
+         ; now shuffle k times, it should reverse
+        (cons k (cons (nshuffle 'inshuffle k cards) nil))))))
 
 
 ; Below are code that gets you a real deck 
