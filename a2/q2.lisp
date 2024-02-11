@@ -13,6 +13,15 @@
 ; Each function takes a tree and returns a list with the 
 ;   contents of the tree when traversed in that order.
 ;
+; reverse a list
+(defun rev (L)
+  (defun revi (L0 acc) 
+    (if (null L0) acc
+      (revi (cdr L0) (cons (car L0) acc) )))
+  (revi L nil)
+)
+
+
 
 ; (b) [5 Points]. 
 ; A polymorphic function, search, 
