@@ -153,6 +153,13 @@
         (inOrderProc curN visN vstk1N vstk2N pendStkN))))) ; call next recurse
   (inOrderProc Tree nil nil nil nil))
 
+; postOrder 
+; I might be wrong.... It might not need be that hard...
+(defun postOrder (Tr)
+  (if (treeEmptyP Tr) nil
+    (append (postOrder (left Tr)) 
+            (postOrder (right Tr)) 
+            (list (nodeVal Tr)))))
 ;
 ; (b) [5 Points]. 
 ; A polymorphic function, search, 
