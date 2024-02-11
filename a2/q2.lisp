@@ -64,6 +64,10 @@
   (if (null L) Tr
     (insertL (insert Tr (car L)) (cdr L)) ))
 
+; use a testing tree
+(defvar *t2*)
+(setq *t2* (insertL nil (list 64 32 16 8 4 48 40 36 44 56 60 62 96 112 104)))
+
 ; preorder (NLR)
 ;  Visit the current node (in the figure: position red).
 ;  Recursively traverse the current node's left subtree.
