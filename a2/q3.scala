@@ -55,11 +55,9 @@ List(List(1, 2, 3, 4, 5, 6, 7, 8), List(9, 10, 11, 12), List(13, 14), List(15))
     }
 
     def repHalve[A](l: List[A]): List[List[A]] = {
-        println("repHalve with " + l)
         def p(x: List[A]): Boolean = (x.length == 0)
         def h(x: List[A]): List[A] = {
             /* return first half of the list */
-            println("h with " + x)
             val n = {
                 if (x.length % 2 == 0) x.length / 2
                 else ( (x.length+1) / 2)
@@ -67,7 +65,6 @@ List(List(1, 2, 3, 4, 5, 6, 7, 8), List(9, 10, 11, 12), List(13, 14), List(15))
             takeN(x, n)
         }
         def t(x: List[A]): List[A] = {
-            println("t with " + x)
             /* return second half of the list */
             val n = x.length / 2
             dropN(x, n)
