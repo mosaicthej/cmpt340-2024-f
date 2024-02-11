@@ -184,11 +184,11 @@
 ;   k is the count for exponent, and
 ;   v is the value of $r^k$
 (defun mord (n r)
-  (defun orda (n r k v)
+  (defun morda (n r k v)
     (if (> (gcd r n) 1) 0 ; mul ord exists only if n r coprime.
       (if (eq 1 (mod v n)) k ; found it!
-        (orda n r (+ 1 k) (* v r) ))))
-  (orda n r 1 r)
+        (morda n r (+ 1 k) (* v r) ))))
+  (morda n r 1 r)
 )
 
 ; testing outshuffle which restores the order of cards
