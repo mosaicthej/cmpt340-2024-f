@@ -191,6 +191,22 @@
   (orda n r 1 r)
 )
 
+; testing outshuffle which restores the order of cards
+; first find the k that (2^k \equiv 1 (mod n-1))
+; (2 is coprime with all odd numbers, so must be a match)
+; then print the original deck, the 
+(defun outshuffle_res (n) ; testing with n cards
+  (if (eq (mod n 2) 1) nil ; has to be even number
+    (let (  (cards (gennL n) )
+            (k (mord (- n 1) 2))  )
+      ; now, if we shuffle k times, it will restore.
+      ; return the result of outshuffle k times
+      ; also return k
+      (cons k (cons (nshuffle 'outshuffle k cards) nil))
+    )
+  )
+)
+
 
 ; Below are code that gets you a real deck 
 ; (with suit and face)
