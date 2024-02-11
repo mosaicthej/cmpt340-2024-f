@@ -1,4 +1,5 @@
-class q1{
+package q1
+class Q1{
 /*
 ; Problem 1 [45 Points]. 
 ; The following set of problems is about shuffling of cards, 
