@@ -196,15 +196,20 @@
 ; (2 is coprime with all odd numbers, so must be a match)
 ; then return the shuffled deck.
 ; enable trace on nshuffle or outshuffle to see trace.
-(defun outshuffle_res (n) ; testing with n cards
-  (if (eq (mod n 2) 1) nil ; has to be even number
-    (let (  (cards (gennL n) )
-            (k (mord (- n 1) 2))  )
+(defun outshuffle_res_card (cards)
+  (let (  (n (alen cards) )  )
+    (if (eq (mod n 2) 1) nil ; must be even len
+      (let ( (k (mord (- n 1) 2)) ) 
       ; now, if we shuffle k times, it will restore.
       ; return the result of outshuffle k times
       ; also return (as a dotted pair)
-      (cons k 
-        (cons (nshuffle 'outshuffle k cards) nil)))))
+        (cons k
+          (cons (nshuffle 'outshuffle k cards) nil))))))
+
+(defun outshuffle_res (n) ; testing with n cards
+  (let (  (cards (gennL n) )  ) ; generating the cards
+    (outshuffle_res_card cards))) ; then pass to generic func.
+
 ; For using in-shuffle to acheive reverse-order, 
 ; perform x in-shuffle where: $ 2^x \equiv n (mod n+1) $
 ; It can proved with some Discrete logarithm theories
@@ -229,14 +234,17 @@
 ; (in case that it fails, return nil)
 ; then print the cards after shuffle (should be in reverse)
 ; enable trace on nshuffle or inshuffle to see trace
-(defun inshuffle_rev (n)
-  (if (eq (mod n 2) 1) nil
-    (let (  (cards (gennL n))  
-            (k (drom (+ n 1) 2))  )
-      (if (null k) nil  ; in case can't do.
-         ; now shuffle k times, it should reverse
-        (cons k (cons (nshuffle 'inshuffle k cards) nil))))))
+(defun inshuffle_rev_card (cards)
+  (let (  (n (alen cards))  )
+    (if (eq (mod n 2) 1) nil  ; must be even len
+      (let (  (k (drom (+ n 1) 2))  )
+        (if (null k) nil ; in case can't do
+          (cons k  ; now shuffle k times, it should reverse
+           (cons (nshuffle 'inshuffle k cards) nil)))))))
 
+(defun inshuffle_rev (n)
+  (let (  (cards (gennL n))  )  ; make n cards
+      (inshuffle_rev_card cards))) ; call generic function
 
 ; Below are code that gets you a real deck 
 ; (with suit and face)
