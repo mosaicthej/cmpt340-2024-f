@@ -23,6 +23,17 @@
 
 
 ; They are all DFS. Need a stack
+; using this tree as an example to test:
+; https://en.wikipedia.org/wiki/File:Sorted_binary_tree_ALL_RGB.svg
+(defvar *wikitr*)
+(setq *wikitr* '(
+ ((nil A nil)
+  B
+  ((nil C nil) D (nil E nil)))
+ F
+ (nil G ((nil H nil) I nil))))
+
+
 ; preorder:
 ;  Visit the current node (in the figure: position red).
 ;  Recursively traverse the current node's left subtree.
