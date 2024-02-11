@@ -1,0 +1,64 @@
+I can't figure out the testing and importing datastructures in scala....
+
+I'll just put my testing from lisp here...
+The logic are the same... just syntax is different:
+
+=====================================================================
+
+
+Script started on 2024-02-11 17:42:45-06:00 [TERM="tmux-256color" TTY="/dev/pts/20" COLUMNS="136" LINES="34"]
+[1m[7m%[27m[1m[0m                                                                                                                                        k~/340/a2\[0m[27m[24m[J[01;32m➜  [36ma2[00m [01;34mgit:([31mmain[34m) [33m✗[00m [K[?1h=[?2004hscript q2-lisp.out[18Drm[4P[12C    [14Dsbcl          [10D[?1l>[?2004l
+ksbcl\This is SBCL 2.3.5, an implementation of ANSI Common Lisp.
+More information about SBCL is available at <http://www.sbcl.org/>.
+
+SBCL is free software, provided as is, with absolutely no warranty.
+It is mostly in the public domain; some portions are provided under
+BSD-style licenses.  See the CREDITS and COPYING files in the
+distribution for more information.
+* (defvar q2 "q2.lisp")
+Q2
+* (load q2)
+T
+* *wikitr*
+(((NIL A NIL) B ((NIL C NIL) D (NIL E NIL))) F (NIL G ((NIL H NIL) I NIL)))
+* ( *t2*
+(((((NIL 4 NIL) 8 NIL) 16 NIL) 32
+  (((NIL 36 NIL) 40 (NIL 44 NIL)) 48 (NIL 56 (NIL 60 (NIL 62 NIL)))))
+ 64 (NIL 96 ((NIL 104 NIL) 112 NIL)))
+* in  (preorder *wikitr*)
+(F B A D C E G I H)
+* (inorder *wikitr*)
+(A B C D E F G H I NIL)
+* (postorderx *wikitr*)
+(A C E D B H I G F)
+* (preorderx *wikitr*)
+(F B A D C E G I H)
+* (inorderx *wikitr*)
+(A B C D E F G H I)
+* (preorderx *t2*)
+(64 32 16 8 4 48 40 36 44 56 60 62 96 112 104)
+* (preorder *t2*)
+(64 32 16 8 4 48 40 36 44 56 60 62 96 112 104)
+* (inorder *t2*)
+(4 8 16 32 36 40 44 48 56 60 62 64 96 104 112 NIL)
+* (inorder *  x t2  *t2*)
+(4 8 16 32 36 40 44 48 56 60 62 64 96 104 112)
+* (p postorderx *t2*)
+(4 8 16 36 44 40 62 60 56 48 32 104 112 96 64)
+* (searchTr *wikitr* 'G)
+T
+* (searchTr *wikitr* 'X)
+NIL
+* (searchTr *t2  * 55)
+NIL
+* (searchTr *t2* 64)
+T
+* (replaceTr *t2* 64 55)
+(((((NIL 4 NIL) 8 NIL) 16 NIL) 32
+  (((NIL 36 NIL) 40 (NIL 44 NIL)) 48 (NIL 56 (NIL 60 (NIL 62 NIL)))))
+ 55 (NIL 96 ((NIL 104 NIL) 112 NIL)))
+* (searchTr * (replaceTr *2 t2* 64 55) 55)
+T
+* [1m[7m%[27m[1m[0m                                                                                                                                        k~/340/a2\[0m[27m[24m[J[01;32m➜  [36ma2[00m [01;34mgit:([31mmain[34m) [33m✗[00m [K[?1h=[?2004h[?2004l
+
+Script done on 2024-02-11 17:47:09-06:00 [COMMAND_EXIT_CODE="0"]
