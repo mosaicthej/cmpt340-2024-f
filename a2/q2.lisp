@@ -206,5 +206,3 @@
              (replaceTr (right Tr) before after)))))
 
 ; [Hint: Model your Tree data type after the List data type presented in class.]
-
- 
