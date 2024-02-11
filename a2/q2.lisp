@@ -155,11 +155,24 @@
 
 ; postOrder 
 ; I might be wrong.... It might not need be that hard...
-(defun postOrder (Tr)
+(defun postOrderX (Tr)
   (if (treeEmptyP Tr) nil
-    (append (postOrder (left Tr)) 
-            (postOrder (right Tr)) 
+    (append (postOrderX (left Tr)) 
+            (postOrderX (right Tr)) 
             (list (nodeVal Tr)))))
+
+; bruh that acutally worked...
+(defun preOrderX (Tr)
+  (if (treeEmptyP Tr) nil
+    (cons (nodeVal Tr) 
+          (append (preorderX (left Tr)) (preorderX (right Tr))))))
+
+; rip my sanity
+(defun inOrderX (Tr)
+  (if (treeEmptyP Tr) nil
+    (append (inorderX (left Tr)) 
+            (list (nodeVal Tr))
+            (inorderX (right Tr)))))
 ;
 ; (b) [5 Points]. 
 ; A polymorphic function, search, 
