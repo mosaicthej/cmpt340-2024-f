@@ -40,6 +40,19 @@
   t
 )
 
+; made rev public since it's useful in many cases
+;@args:
+; L   - remaining list
+; acc - progress-so-far 
+(defun rev (L)
+  (defun revi (L0 acc) 
+    (if (null L0) acc
+      (revi (cdr L0) (cons (car L0) acc) )))
+  (revi L nil)
+)
+
+
+
 ;(b) [7 Points]. 
 ; Write a polymorphic function, split, 
 ; which takes as parameters a list 
@@ -50,17 +63,6 @@
 ;  and the second with the remaining elements (again, in order).  
 ; These two lists are then returned as a list of two lists.
 (defun split (L n)
-  ;@args:
-  ; L   - remaining list
-  ; acc - progress-so-far 
-  (defun rev (L)
-    (defun revi (L0 acc) 
-      (if (null L0) acc
-        (revi (cdr L0) (cons (car L0) acc) )))
-    (revi L nil)
-  )
-  
-
   ;@args:
   ; listPair - a dotted pair representing two stacks
   ; n - number of where from stk2 should put after stk1
@@ -154,3 +156,4 @@
 ; ii) How many in-shuffles are required to 
 ;    completely reverse a stack of 52 cards?
 ;
+; I think there should be a closed-form formula...
