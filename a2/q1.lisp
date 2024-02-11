@@ -169,3 +169,12 @@
 ; infact, any position for any card can be binary encoded...
 ; This is fun... I'll look into it...
 ; ... now just to demonstrate.
+
+; first generate any number of cards...
+(defun gennL (n)
+  (defun genna(n accu)
+    (if (eq n 0) accu
+      (cons n (genna (- n 1) nil ))))
+  (rev (genna n nil))
+)
+
