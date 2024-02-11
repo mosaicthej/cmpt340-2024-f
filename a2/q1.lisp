@@ -207,6 +207,25 @@
   )
 )
 
+; For using in-shuffle to acheive reverse-order, 
+; perform x in-shuffle where: $ 2^x \equiv n (mod n+1) $
+; It can proved with some Discrete logarithm theories
+;  that i won't expand here....
+;
+; I'll call this "drom" since it's quite like the opposite
+; of "mord" above.
+; Basically modular arithmetic with special case.
+; Given n and r, find that
+; $ r^x \equiv n-1 (mod n)
+(defun drom (n r)
+  (defun droma (n r k v)
+    (if (> k n) 0 ; at most n iterations before looping
+      (if (eq (- n 1) (mod v n)) k ; found it!
+        (droma n r (+ k 1) (* v r) ) ; keep going
+      )))
+  (droma n r 1 r)
+)
+
 
 ; Below are code that gets you a real deck 
 ; (with suit and face)
