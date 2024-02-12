@@ -1,0 +1,82 @@
+Can't get the import to another module work...
+So i just copied the functions in interactive shell
+and tested them manually...
+
+===========================================
+// Entering paste mode (ctrl-D to finish)
+... (all the codes from q2.scala...)
+// Exiting paste mode, now interpreting.
+
+defined class Tree
+treeEmptyP: [T](tree: Option[Tree[T]])Boolean
+createEmptyTr: [T]()Option[Tree[T]]
+createTr: [T](lTr: Option[Tree[T]], N: T, rTr: Option[Tree[T]])Option[Tree[T]]
+nodeval: [T](tree: Option[Tree[T]])Option[T]
+left: [T](tree: Option[Tree[T]])Option[Tree[T]]
+right: [T](tree: Option[Tree[T]])Option[Tree[T]]
+
+
+insert: [T](tree: Option[Tree[T]], num: T)(implicit ord: Ordering[T])Option[Tree[T]]
+insertL: [T](tree: Option[Tree[T]], L: List[T])(implicit ord: Ordering[T])Option[Tree[T]]
+preOrder: [T](tree: Option[Tree[T]])List[T]
+inOrder: [T](tree: Option[Tree[T]])List[T]
+postOrder: [T](tree: Option[Tree[T]])List[T]
+searchTr: [T](tree: Option[Tree[T]], key: T)(implicit ord: Ordering[T])Boolean
+replaceTr: [T](tree: Option[Tree[T]], before: T, after: T)(implicit ord: Ordering[T])Option[Tree[T]]
+
+scala> val x = createEmptyTr
+x: Option[Tree[Nothing]] = None
+
+scala> val y = insertL(x, List(64,32,16,8,4,48,40,36,44,56,60,62,96,112,104))
+<console>:13: error: type mismatch;
+ found   : Option[Tree[Nothing]]
+ required: Option[Tree[Int]]
+       val y = insertL(x, List(64,32,16,8,4,48,40,36,44,56,60,62,96,112,104))
+                       ^
+
+scala> val x = createEmptyTr[Int]() // Now x is of type Option[Tree[Int]]
+x: Option[Tree[Int]] = None
+
+scala> val y = insertL(x, List(64,32,16,8,4,48,40,36,44,56,60,62,96,112,104))
+y: Option[Tree[Int]] = Some(Tree@7a34505a)
+
+scala> y
+res0: Option[Tree[Int]] = Some(Tree@7a34505a)
+
+scala> preOrder(y)
+res1: List[Int] = List(64, 32, 16, 8, 4, 48, 40, 36, 44, 56, 60, 62, 96, 112, 104)
+
+scala> inOrder(y)
+res2: List[Int] = List(4, 8, 16, 32, 36, 40, 44, 48, 56, 60, 62, 64, 96, 104, 112)
+
+scala> postOrder(y)
+res3: List[Int] = List(4, 8, 16, 36, 44, 40, 62, 60, 56, 48, 32, 104, 112, 96, 64)
+
+scala> searchTr(y, 5)
+res4: Boolean = false
+
+scala> searchTr(y, 64)
+res5: Boolean = true
+
+scala> searchTr(y, 96)
+res6: Boolean = true
+
+scala> searchTr(y, 17)
+res7: Boolean = false
+
+scala> val k0 = replaceTr(y, 60, 56)
+k0: Option[Tree[Int]] = Some(Tree@23263586)
+
+scala> inOrder(k0)
+res8: List[Int] = List(4, 8, 16, 32, 36, 40, 44, 48, 56, 56, 62, 64, 96, 104, 112)
+
+scala> val k1 = replaceTr(k0, 56, 40)
+k1: Option[Tree[Int]] = Some(Tree@2387e60b)
+
+scala> val k1 = replaceTr(k0, 56, 62)
+k1: Option[Tree[Int]] = Some(Tree@4c219c84)
+
+scala> inOrder(k1)
+res9: List[Int] = List(4, 8, 16, 32, 36, 40, 44, 48, 62, 62, 62, 64, 96, 104, 112)
+
+
