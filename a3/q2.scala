@@ -74,12 +74,13 @@ sealed class Partial[+E, +A] {
         case Success(aa) => b match {
           case Success(bb) => c match {
             case Success(cc) => Success(f(aa, bb, cc))
-            case Errors(e_seq_c) => Errors(e_seq_c)
+            case Errors(e_seq_c) => Errors(e_seq_c.asInstanceOf[Seq[E]])
             case _ => throw new Exception("This should not happen")
           }
           case Errors(e_seq_b) => c match {
-            case Success(cc) => Errors(e_seq_b)
-            case Errors(e_seq_c) => Errors(e_seq_b ++ e_seq_c)
+            case Success(cc) => Errors(e_seq_b.asInstanceOf[Seq[E]])
+            case Errors(e_seq_c) => Errors(e_seq_b.asInstanceOf[Seq[E]] 
+              ++ e_seq_c.asInstanceOf[Seq[E]])
             case _ => throw new Exception("This should not happen")
           }
           case _ => throw new Exception("This should not happen")
@@ -87,12 +88,16 @@ sealed class Partial[+E, +A] {
         case Errors(e_seq) => b match {
           case Success(bb) => c match {
             case Success(cc) => Errors(e_seq)
-            case Errors(e_seq_c) => Errors(e_seq ++ e_seq_c)
+            case Errors(e_seq_c) => Errors(e_seq.asInstanceOf[Seq[E]] 
+              ++ e_seq_c.asInstanceOf[Seq[E]])
             case _ => throw new Exception("This should not happen")
           }
           case Errors(e_seq_b) => c match {
-            case Success(cc) => Errors(e_seq ++ e_seq_b)
-            case Errors(e_seq_c) => Errors(e_seq ++ e_seq_b ++ e_seq_c)
+            case Success(cc) => Errors(e_seq.asInstanceOf[Seq[E]] 
+              ++ e_seq_b.asInstanceOf[Seq[E]])
+            case Errors(e_seq_c) => Errors(e_seq.asInstanceOf[Seq[E]] 
+              ++ e_seq_b.asInstanceOf[Seq[E]] 
+              ++ e_seq_c.asInstanceOf[Seq[E]])
             case _ => throw new Exception("This should not happen")
           }
           case _ => throw new Exception("This should not happen")
