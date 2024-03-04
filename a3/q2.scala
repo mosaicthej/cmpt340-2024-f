@@ -134,6 +134,7 @@ sealed class Partial[+E, +A] {
         Success(successes)
       }
 }
+
 case class Errors[+E](get: Seq[E]) extends Partial[E, Nothing] {
   def isSuccess: Boolean = false
   def isErrors: Boolean = true
@@ -141,4 +142,21 @@ case class Errors[+E](get: Seq[E]) extends Partial[E, Nothing] {
 case class Success[+A](get: A) extends Partial[Nothing, A] {
   def isSuccess: Boolean = true
   def isErrors: Boolean = false
+}
+
+/*
+Errors and Success are disjoint unions, a Partial can be 
+either an Errors or a Success but not both.
+
+Errors -> get: yields a sequence of errors
+Success -> get: yields a value of type B (no errors at all)
+*/
+object Partial {
+/* g) [2 Points] 
+Implement the Try function to convert a possible exception into a Partial
+*/
+  def Try[A](a: => A): Partial[Exception, A] = 
+    try Success(a)
+    catch { case e: Exception => Errors(Seq(e)) }
+
 }
