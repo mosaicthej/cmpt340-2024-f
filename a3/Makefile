@@ -6,7 +6,7 @@ SRC_DIR=.
 BUILD_DIR=./build
 TEST_OUT_DIR=./test-out
 SCALA_SOURCES= q1 q2 # q3
-TEST_SOURCES= test_q1 #test_q2 # test_q3 test_q3_v2
+TEST_SOURCES= test_q1 test_q2 # test_q3 test_q3_v2
 
 # Manual mapping of test sources to their fully qualified test class names
 test_q1_CLASS=Q1Test.Q1Test

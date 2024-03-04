@@ -1,0 +1,36 @@
+George parents: Right((William,Catherine)) expected: Right((William,Catherine))
+PASS
+Elizabethexpected to has no parent on the map, got:
+Left(Error: Elizabeth has no parent on the map)
+PASS
+Johnexpected to has no entry on the map, got:
+Left(Error: John has no entry on the map)
+PASS
+All parents test cases passed!
+
+George grandparents: Right(List(Diana, Charles)) expected: Right(List(Diana, Charles))
+PASS
+Elizabethexpected to has no grandparent on the map, got:
+Left(Error: Elizabeth has no parent on the map)
+PASS
+Johnexpected to has no entry on the map, got:
+Left(Error: John has no entry on the map)
+PASS
+All grandparents test cases passed!
+
+George aunts: Right(List(Meghan)) expected: Right(List(Meghan))
+PASS
+William aunts: Right(List(Anne, Sarah, Sophie)) expected: Right(List(Anne, Sarah, Sophie))
+PASS
+Edward aunts: Right(List()) expected: Right(List())
+PASS
+PASS
+PASS
+All aunts test cases passed!
+William first cousin spouses: Right(List(Edoardo, Jack, Mike, Autumn)) expected: Right(List(Edoardo, Jack, Mike, Autumn))
+PASS
+Peter first cousin spouses: Right(List(Edoardo, Jack, Catherine, Meghan)) expected: Right(List(Edoardo, Jack, Catherine, Meghan))
+PASS
+George first cousin spouses: Right(List()) expected: Right(List())
+PASS
+All first cousins spouses test cases passed!

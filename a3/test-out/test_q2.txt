@@ -1,0 +1,12 @@
+mapTest passed!, got: Success(10)
+flatMapTest passed!, got: Success(10)
+getOrElseTest1 passed!, got: 5
+getOrElseTest2 passed!, got: 0
+orElseTest1 passed!, got: Success(5)
+orElseTest2 passed!, got: Success(10)
+map3Test passed!, got: Success(9)
+map2Test passed!, got: Success(5)
+sequenceTest1 passed!, got: Success(List(1, 2, 3))
+sequenceTest2 passed!, got: Errors(Seq("Error"))
+All tests passed!
+
