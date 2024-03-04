@@ -24,6 +24,18 @@ accumulating errors when meaningful to do so. */
 */
 
 sealed class Partial[+E, +A] {
+    /* a) [3 Points] map 
+    which applies the given function to the value in the Success case. */
+    def map[nA](f: A=>nA): Partial[E, nA] = /* Error or f(x) */
+      this match {
+        /*
+            case Errors(e_seq) => append a new error to the sequence
+            case Success(s) => try Success(f(s)) but catch the exception
+        */
+        case Errors(e_seq) => Errors(e_seq) // todo: accumulate errors? (what type)?
+        case Success(s) => Success(f(s))
+    }
+
 case class Errors[+E](get: Seq[E]) extends Partial[E, Nothing] {
   def isSuccess: Boolean = false
   def isErrors: Boolean = true
