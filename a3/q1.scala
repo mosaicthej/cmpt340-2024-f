@@ -162,4 +162,16 @@ class Q1 {
         }
     }
 
+    /* get male and female siblings of p */
+    def genderSibling(p: String): Either[String, (List[String], List[String])] = {
+        siblings(p) match {
+            case Left(e) => Left(e)
+            case Right(sibList) => {
+                val maleSib = sibList.filter(royalParent(_)._1 == "m")
+                val femaleSib = sibList.filter(royalParent(_)._1 == "f")
+                Right(maleSib, femaleSib)
+            }
+        }
+    }
+
 }
