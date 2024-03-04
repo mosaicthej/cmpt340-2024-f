@@ -1,4 +1,4 @@
-package q2
+package a3q2
 
 import scala.util.{Success=>_, Failure=>_, _}
 /* Problem 2 [25 Points]. 
