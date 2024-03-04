@@ -60,6 +60,36 @@ sealed class Partial[+E, +A] {
         case Success(s) => Success(s)
     }
 
+    
+    /* e) [3 Points] map3 (to lift a function of three arguments) 
+    as opposed to map2 which two arguments get lifted. */
+    def map3[EE >:E, B, C, D]
+    (b: Partial[E, B], c: Partial[E, C])
+    (f: (A, B, C) => D): Partial[E, D] = {
+      this match {
+        case Success(aa) => b match {
+          case Success(bb) => c match {
+            case Success(cc) => Success(f(aa, bb, cc))
+            case Errors(e_seq_c) => Errors(e_seq_c)
+          }
+          case Errors(e_seq_b) => c match {
+            case Success(cc) => Errors(e_seq_b)
+            case Errors(e_seq_c) => Errors(e_seq_b ++ e_seq_c)
+          }
+        }
+        case Errors(e_seq) => b match {
+          case Success(bb) => c match {
+            case Success(cc) => Errors(e_seq)
+            case Errors(e_seq_c) => Errors(e_seq ++ e_seq_c)
+          }
+          case Errors(e_seq_b) => c match {
+            case Success(cc) => Errors(e_seq ++ e_seq_b)
+            case Errors(e_seq_c) => Errors(e_seq ++ e_seq_b ++ e_seq_c)
+          }
+        }
+      }
+    }
+
 case class Errors[+E](get: Seq[E]) extends Partial[E, Nothing] {
   def isSuccess: Boolean = false
   def isErrors: Boolean = true
