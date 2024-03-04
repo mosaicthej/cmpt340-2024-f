@@ -197,4 +197,32 @@ class Q1 {
         }
     }
 
+    /* d) [5 Points]  assume existence of correct implementations of (a) and (b)
+    def firstCousinsSpouses(p: String): Either[String, List[String]]. 
+    spouses of one's first cousins
+    p -> (fa, mo) -> uncleaunt:=[fa's siblings]++[mo's siblings]
+        -> firstcousions := uncleaunt.flatMap(children) -> result: firstcousions.map(spouse)
+    */
+    def firstCousinsSpouses(p: String): Either[String, List[String]] = {
+        parents(p) match {
+            case Left(e) => Left(e) // error of any kind
+            case Right((f, m)) => { // has a father and mother on the map
+                val uncleAunt = List(f, m).flatMap(
+                    x => siblings(x) match{
+                        case Left(e) => Nil: List[String]
+                        case Right(sibList) => sibList
+                    }
+                )
+                val firstCousins = uncleAunt.flatMap(
+                    x => children(x) match{
+                        case Left(value) => Nil: List[String]
+                        case Right(cList) => cList
+                    }
+                )
+                val firstCousinSpouses = firstCousins.map(spouse(_)).filter(_.isRight).map(_.right.get)
+                Right(firstCousinSpouses)
+            }
+        }
+    }
+
 }
