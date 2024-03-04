@@ -36,6 +36,14 @@ sealed class Partial[+E, +A] {
         case Success(s) => Success(f(s))
     }
 
+    /* b) [3 Points] flatMap
+    which applies the given function to the value in the Success case 
+    and returns the result. */
+    def flatMap[AA >: A, C](f: A => Partial[E, A]): Partial[E, A] = this match {
+        case Errors(e_seq) => Errors(e_seq)
+        case Success(s) => f(s)
+    }
+
 case class Errors[+E](get: Seq[E]) extends Partial[E, Nothing] {
   def isSuccess: Boolean = false
   def isErrors: Boolean = true
