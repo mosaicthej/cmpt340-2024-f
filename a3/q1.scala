@@ -1,5 +1,7 @@
 package Q1
+
 import scala.collection.immutable
+
 class Q1 {
     val digMap = Map(0 -> "zero", 1 -> "one", 2 -> "two", 3 -> "three", 4 -> "four", 5 -> "five", 6 -> "six", 7 -> "seven", 8 -> "eight", 9 -> "nine")
     
@@ -57,4 +59,20 @@ class Q1 {
        extract information about particular 
        family relationships from this Map.
    */
+    val errFmtStr = "Error: %s has no %s on the map"
+
+   /* a) [5 Points] 
+   def parents(p: String): Either[String, (String, String)] 
+    that takes a name p and returns either:
+        - an error message if p is not in the Map,
+        - an error message if p is in the Map but has no parentage information,
+        - or a pair of strings representing the parents of p.
+   */
+    def parents(p: String): Either[String, (String, String)] = {    
+        royalParent.get(p) match {
+            case Some((_, "", "")) => Left(errFmtStr.format(p, "parent"))
+            case Some((_, f, m)) => Right((f, m))
+            case None => Left(errFmtStr.format(p, "entry"))
+        }
+    }
 }
