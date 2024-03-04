@@ -75,4 +75,37 @@ class Q1 {
             case None => Left(errFmtStr.format(p, "entry"))
         }
     }
+
+    /* b) [5 Points] this assumes existence of correct implementation of (a)
+    def grandparents(p: String): Either[String, List[String]]
+    that takes a name p and returns either:
+        - an error message if p is not in the Map,
+        - an error message if p is in the Map but has no grandparentage information,
+        - or a list of strings representing the grandparents of p.
+
+    First get the parents of p, then get the parents of each parent, 
+    using a for-comprehension to combine the results.
+    */
+    def grandparents(p: String): Either[String, List[String]] = {
+        parents(p) match {
+            case Left(e) => Left(e) // error of any kind
+            case Right((f, m)) => { // has a father and mother on the map
+                val fGrand = parents(f) match {
+                    case Left(e) => Nil
+                    case Right((ff, fm)) => List(ff, fm)
+                }
+                val mGrand = parents(m) match {
+                    case Left(e) => Nil
+                    case Right((mf, mm)) => List(mf, mm)
+                }
+                
+                val grandList = fGrand ++ mGrand
+                grandList match {
+                    case Nil => Left(errFmtStr.format(p, "grandparent"))
+                    case _ => Right(grandList)  
+                }
+            }
+        }
+    }
+
 }
