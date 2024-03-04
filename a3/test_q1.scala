@@ -69,7 +69,7 @@ object Q1Test extends App {
   def testAunts(): Unit = {
     // Test case 1: Existing entry with aunt information
     val input1 = "George"
-    val expected1 = Right(List("Megan"))
+    val expected1 = Right(List("Meghan"))
     val result1 = q1Instance.aunts(input1)
     assert(result1 == expected1, s"Test case 1 failed: Expected $expected1, but got $result1")
     println(input1 + " aunts: " + result1 + " expected: " + expected1)

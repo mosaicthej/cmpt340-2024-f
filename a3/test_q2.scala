@@ -46,11 +46,12 @@ object Q2Test extends App {
   // Test sequence function
   val sequenceTest1 = Partial.sequence(List(Success(1), Success(2), Success(3)))
   assert(sequenceTest1 == Success(List(1, 2, 3)), s"sequenceTest1 failed: Expected Success(List(1, 2, 3)), but got $sequenceTest1")
-  println("sequenceTest1 passed!, got: Success(List(1, 2, 3))"
+  println("sequenceTest1 passed!, got: Success(List(1, 2, 3))")
 
   val sequenceTest2 = Partial.sequence(List(Success(1), Errors(Seq("Error")), Success(3)))
   assert(sequenceTest2 == Errors(Seq("Error")), s"sequenceTest2 failed: Expected Errors(Seq(\"Error\")), but got $sequenceTest2")
   println("sequenceTest2 passed!, got: Errors(Seq(\"Error\"))")
 
   println("All tests passed!")
+  println()
 }
