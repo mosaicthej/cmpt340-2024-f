@@ -174,4 +174,27 @@ class Q1 {
         }
     }
 
+    /* now, implement the aunts.
+     aunts are:
+        - female siblings of one's parents
+        - spouse of male siblings of one's parents
+    */
+    def aunts(p: String): Either[String, List[String]] = {
+        parents(p) match {
+            case Left(e) => Left(e) // error of any kind
+            case Right((f, m)) => { // has a father and mother on the map
+                val auntsL = List(f, m).flatMap(
+                    x => genderSibling(x) match{
+                        case Left(value) => Nil: List[String]
+                        case Right((mSib, fSib)) => fSib ++ 
+                            mSib.map(spouse(_))
+                                .filter(_.isRight)
+                                .map(_.right.get)
+                    }
+                )
+                Right(auntsL)
+            }
+        }
+    }
+
 }
