@@ -136,4 +136,22 @@ class Q1 {
         }
     }
 
+    def siblings(p: String): Either[String, List[String]] = {
+        parents(p) match {
+            case Left(e) => Left(e) // error of any kind
+            case Right((f, m)) => { // has a father and mother on the map
+                val sibList = children(f) match { // children of k's father
+                    case Left(e) => Nil
+                    case Right(fList) => fList.filter(_ != p) // remove k
+                }
+                /* no divorce or remarriage in the royal family,
+                so no need to check for children of m */
+                sibList match {
+                    case Nil => Left(errFmtStr.format(p, "sibling"))
+                    case _ => Right(sibList)
+                }
+            }
+        }
+    }
+
 }
