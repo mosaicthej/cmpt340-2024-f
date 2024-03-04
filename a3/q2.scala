@@ -1,6 +1,6 @@
 package q2
 
-import scala.util.Success
+import scala.util.{Success=>_, Failure=>_, _}
 /* Problem 2 [25 Points]. 
   Recall that unlike Options 
   where multiple errors are simply subsumed by a None, 
