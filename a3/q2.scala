@@ -90,6 +90,50 @@ sealed class Partial[+E, +A] {
       }
     }
 
+    /*
+    which combines two Partials using a binary function. */
+    def map2[EE >: E, B, C](b: Partial[EE, B])(f: (A, B) => C): Partial[EE, C] = {
+      this match {
+        case Errors(e_seq) => b match {
+          case Errors(e_seq_b) => Errors(e_seq ++ e_seq_b)
+          case Success(bb) => Errors(e_seq)
+        }
+        case Success(aa) => b match {
+          case Errors(e_seq_b) => Errors(e_seq_b)
+          case Success(bb) => Success(f(aa, bb))
+        }
+      }
+    }
+
+    /* f) [6 Points] sequence
+    which combines a list of Partials into one Partial
+      containing a list of all the Success values in the list.
+    If the original list contains any Errors, the result of the function
+      should be an Errors which all errors collected. */
+    def containErrors[E, A](ps: List[Partial[E, A]]): Boolean = 
+      ps match {
+        case Nil => false
+        case h::t => h match {
+          case Errors(e_seq) => true
+          case Success(s) => containErrors(t)
+        }
+      }
+
+    def sequence[E, A](ps: List[Partial[E, A]]): Partial[E, List[A]] = 
+      if (containErrors(ps)) {
+        val errors = ps.foldLeft(Seq[E]())((acc, p) => p match {
+          case Errors(e_seq) => acc ++ e_seq
+          case Success(s) => acc
+        })
+        Errors(errors)
+      } else { // a list of all successes
+        val successes = ps.map(p=> p match {
+          case Success(s) => s
+          case _ => throw new Exception("This should not happen")
+        })
+        Success(successes)
+      }
+}
 case class Errors[+E](get: Seq[E]) extends Partial[E, Nothing] {
   def isSuccess: Boolean = false
   def isErrors: Boolean = true
