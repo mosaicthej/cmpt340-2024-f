@@ -154,4 +154,12 @@ class Q1 {
         }
     }
 
+    def spouse(p: String): Either[String, String] = {
+        val couples = royalParent.filter { case (k, v) => v._2 == p || v._3 == p }
+        if (couples.isEmpty) Left(errFmtStr.format(p, "spouse"))
+        else couples.values.head match {
+            case (_, mo, fa) => if (mo == p) Right(fa) else Right(mo)
+        }
+    }
+
 }
