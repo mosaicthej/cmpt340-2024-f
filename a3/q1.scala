@@ -108,4 +108,24 @@ class Q1 {
         }
     }
 
+    /* c) [5 Points]
+    def aunts(p: String): Either[String, List[String]]. 
+    female siblings of one's parents, 
+    and female spouses of (male or female) siblings of one's parents
+    
+    that takes a name p and returns either:
+        - an error message if p is not in the Map,
+        - an error message if p is in the Map but has no aunt information,
+        - or a list of strings representing the aunts of p.
+    */
+
+    /*
+        it would be more helpful to have functions that:
+    def siblings(p: String): Either[String, List[String]] -> returns siblings of p in a list:
+        first find the parents, then find all children of the parents
+        def children(p: String): Either[String, List[String]] -> returns children of p in a list:
+            traverse the map and find all parents that are p
+    def spouse(p: String): Either[String, String] -> returns spouse of p
+        traverse the map and find the spouse of p
+    */
 }
