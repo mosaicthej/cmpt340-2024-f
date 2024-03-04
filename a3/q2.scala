@@ -25,6 +25,10 @@ accumulating errors when meaningful to do so. */
 
 sealed class Partial[+E, +A] {
 case class Errors[+E](get: Seq[E]) extends Partial[E, Nothing] {
+  def isSuccess: Boolean = false
+  def isErrors: Boolean = true
 }
 case class Success[+A](get: A) extends Partial[Nothing, A] {
+  def isSuccess: Boolean = true
+  def isErrors: Boolean = false
 }
