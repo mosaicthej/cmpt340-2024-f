@@ -34,6 +34,7 @@ sealed class Partial[+E, +A] {
         */
         case Errors(e_seq) => Errors(e_seq) // todo: accumulate errors? (what type)?
         case Success(s) => Success(f(s))
+        case _ => throw new Exception("This should not happen")
     }
 
     /* b) [3 Points] flatMap
@@ -42,6 +43,7 @@ sealed class Partial[+E, +A] {
     def flatMap[AA >: A, C](f: A => Partial[E, A]): Partial[E, A] = this match {
         case Errors(e_seq) => Errors(e_seq)
         case Success(s) => f(s)
+        case _ => throw new Exception("This should not happen")
     }
 
     /* c) [3 Points] getOrElse
@@ -50,6 +52,7 @@ sealed class Partial[+E, +A] {
     def getOrElse[AA >: A](default: => AA): AA = this match {
         case Errors(e_seq) => default
         case Success(s) => s
+        case _ => throw new Exception("This should not happen")
     }
 
     /* d) [3 Points] orElse
@@ -58,6 +61,7 @@ sealed class Partial[+E, +A] {
     def orElse[AA >: A, EE >: E](default: => Partial[EE, AA]): Partial[EE, AA] = this match {
         case Errors(e_seq) => default
         case Success(s) => Success(s)
+        case _ => throw new Exception("This should not happen")
     }
 
     
@@ -71,22 +75,29 @@ sealed class Partial[+E, +A] {
           case Success(bb) => c match {
             case Success(cc) => Success(f(aa, bb, cc))
             case Errors(e_seq_c) => Errors(e_seq_c)
+            case _ => throw new Exception("This should not happen")
           }
           case Errors(e_seq_b) => c match {
             case Success(cc) => Errors(e_seq_b)
             case Errors(e_seq_c) => Errors(e_seq_b ++ e_seq_c)
+            case _ => throw new Exception("This should not happen")
           }
+          case _ => throw new Exception("This should not happen")
         }
         case Errors(e_seq) => b match {
           case Success(bb) => c match {
             case Success(cc) => Errors(e_seq)
             case Errors(e_seq_c) => Errors(e_seq ++ e_seq_c)
+            case _ => throw new Exception("This should not happen")
           }
           case Errors(e_seq_b) => c match {
             case Success(cc) => Errors(e_seq ++ e_seq_b)
             case Errors(e_seq_c) => Errors(e_seq ++ e_seq_b ++ e_seq_c)
+            case _ => throw new Exception("This should not happen")
           }
+          case _ => throw new Exception("This should not happen")
         }
+        case _ => throw new Exception("This should not happen")
       }
     }
 
@@ -97,11 +108,14 @@ sealed class Partial[+E, +A] {
         case Errors(e_seq) => b match {
           case Errors(e_seq_b) => Errors(e_seq ++ e_seq_b)
           case Success(bb) => Errors(e_seq)
+          case _ => throw new Exception("This should not happen")
         }
         case Success(aa) => b match {
           case Errors(e_seq_b) => Errors(e_seq_b)
           case Success(bb) => Success(f(aa, bb))
+          case _ => throw new Exception("This should not happen")
         }
+        case _ => throw new Exception("This should not happen")
       }
     }
 
@@ -116,7 +130,9 @@ sealed class Partial[+E, +A] {
         case h::t => h match {
           case Errors(e_seq) => true
           case Success(s) => containErrors(t)
+          case _ => throw new Exception("This should not happen")
         }
+        case _ => throw new Exception("This should not happen")
       }
 
     def sequence[E, A](ps: List[Partial[E, A]]): Partial[E, List[A]] = 
@@ -124,6 +140,7 @@ sealed class Partial[+E, +A] {
         val errors = ps.foldLeft(Seq[E]())((acc, p) => p match {
           case Errors(e_seq) => acc ++ e_seq
           case Success(s) => acc
+          case _ => throw new Exception("This should not happen")
         })
         Errors(errors)
       } else { // a list of all successes
