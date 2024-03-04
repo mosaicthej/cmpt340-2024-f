@@ -1,5 +1,5 @@
 package Q1Test
-import q1.Q1
+import a3q1.Q1
 
 object Q1Test extends App {
   val q1Instance = new Q1()

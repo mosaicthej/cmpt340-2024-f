@@ -1,4 +1,4 @@
-package Q1
+package a3q1
 
 import scala.collection.immutable
 
