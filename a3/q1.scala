@@ -128,4 +128,12 @@ class Q1 {
     def spouse(p: String): Either[String, String] -> returns spouse of p
         traverse the map and find the spouse of p
     */
+    def children(p: String): Either[String, List[String]] = {
+        val childrenList = royalParent.filter { case (k, v) => v._2 == p || v._3 == p }.keys.toList
+        childrenList match {
+            case Nil => Left(errFmtStr.format(p, "children"))
+            case _ => Right(childrenList)
+        }
+    }
+
 }
