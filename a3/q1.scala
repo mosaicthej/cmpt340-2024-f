@@ -225,4 +225,26 @@ class Q1 {
         }
     }
 
+    /* e) [5 Points] assume correct implementations of (a) and (b) and (c)
+    def unclesInLaw(p: String): Either[String, List[String]] 
+    husbands of one's parents' (male or female) siblings  
+    
+    p -> (fa, mo) -> directAunts := [fa's femSiblings]++[mo's femSiblings]
+        -> unclesInLaw := directAunts.map(spouse)
+    */
+    def unclesInLaw(p: String): Either[String, List[String]] = {
+        parents(p) match {
+            case Left(e) => Left(e) // error of any kind
+            case Right((f, m)) => { // has a father and mother on the map
+                val directAunts = List(f, m).flatMap(
+                    x => genderSibling(x) match{
+                        case Left(value) => Nil: List[String]
+                        case Right((_, fSib)) => fSib
+                    }
+                )
+                val unclesInLaw = directAunts.map(spouse(_)).filter(_.isRight).map(_.right.get)
+                Right(unclesInLaw)
+            }
+        }
+    }
 }
