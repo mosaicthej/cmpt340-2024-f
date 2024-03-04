@@ -46,7 +46,7 @@ object Q1Test extends App {
 
     // Test case 2: Existing entry without grandparentage information
     val input2 = "Elizabeth"
-    val expected2 = Left("Error: Elizabeth has no grandparent on the map")
+    val expected2 = Left("Error: Elizabeth has no parent on the map")
     val result2 = q1Instance.grandparents(input2)
     assert(result2 == expected2, s"Test case 2 failed: Expected $expected2, but got $result2")
     println(input2 + "expected to has no grandparent on the map, got:\n" + result2)
