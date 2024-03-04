@@ -52,6 +52,14 @@ sealed class Partial[+E, +A] {
         case Success(s) => s
     }
 
+    /* d) [3 Points] orElse
+    which returns the first Success case it finds,
+    or, if there are no Success cases, an Errors. */
+    def orElse[AA >: A, EE >: E](default: => Partial[EE, AA]): Partial[EE, AA] = this match {
+        case Errors(e_seq) => default
+        case Success(s) => Success(s)
+    }
+
 case class Errors[+E](get: Seq[E]) extends Partial[E, Nothing] {
   def isSuccess: Boolean = false
   def isErrors: Boolean = true
