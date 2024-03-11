@@ -1,7 +1,7 @@
 *.un~
 *.swp
 tags
-target
+target/
 project/boot
 .history
 project.vim
