@@ -34,18 +34,35 @@ class Q2 {
   val primesWithUnfold = primes
 
   def isCoPrimeWith(ps: LazyList[Int], n:Int) : Boolean = {
-    def go(pps:LazyList[Int]): Boolean = {
-      if (pps.isEmpty) true
-      else { 
-        pps match {
-        case h #:: t => 
-          if (n % h == 0) false
-          else if (h*h > n) true
-          else go(t)
-       }
+      def go(pps:LazyList[Int]): Boolean = {
+        if (pps.isEmpty) true
+        else { 
+          pps match {
+          case h #:: t => 
+            if (n % h == 0) false
+            else if (h*h > n) true
+            else go(t)
+         }
+        }
       }
-    }
-    go(ps)
+    if (n<2) false
+    else go(ps)
   }
+
+
+
+
+  def iterateWithoutUnfold[A](f: A => A)(x: A): LazyList[A] = {
+    x #:: iterateWithoutUnfold(f)(f(x))
+  }
+
+  val naturalNums = iterateWithoutUnfold[Int](_ + 1)(2)
+
+  val primesWithoutUnfold : LazyList[Int] = 
+    2 #:: naturalNums.filter(isCoPrimeWith(primesWithoutUnfold, _))
+
+
+
+  
 
 }
