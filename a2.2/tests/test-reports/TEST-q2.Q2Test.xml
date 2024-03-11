@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuite 
-errors="0" failures="0" hostname="unknown" name="q2.Q2Test" tests="7" time="0.133" timestamp="2024-03-10T22:28:27">
+errors="0" failures="0" hostname="unknown" name="q2.Q2Test" tests="7" time="0.114" timestamp="2024-03-10T22:36:18">
   <properties>
     <property name="jline.esc.timeout" value="0"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
@@ -49,7 +49,7 @@ errors="0" failures="0" hostname="unknown" name="q2.Q2Test" tests="7" time="0.13
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="/opt/openjdk-bin-8.382_p05/jre"/>
     <property
-    name="sun.java.command" value="/usr/share/sbt/lib/sbt-launch.jar test"/>
+    name="sun.java.command" value="/usr/share/sbt/lib/sbt-launch.jar test --all"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
@@ -69,10 +69,10 @@ errors="0" failures="0" hostname="unknown" name="q2.Q2Test" tests="7" time="0.13
     <property name="sun.cpu.isalist" value=""/>
   </properties>
   <testcase 
-  name="unfold should correctly generate sequences" classname="q2.Q2Test" time="0.031">
+  name="unfold should correctly generate sequences" classname="q2.Q2Test" time="0.034">
 </testcase>
   <testcase 
-  name="iterateUsingUnfold should generate an incremental sequence" classname="q2.Q2Test" time="0.001">
+  name="iterateUsingUnfold should generate an incremental sequence" classname="q2.Q2Test" time="0.003">
 </testcase>
   <testcase 
   name="iterateWithoutUnfold should generate an incremental sequence" classname="q2.Q2Test" time="0.001">
@@ -81,10 +81,10 @@ errors="0" failures="0" hostname="unknown" name="q2.Q2Test" tests="7" time="0.13
   name="isCoPrimeWith should determine coprimality correctly" classname="q2.Q2Test" time="0.005">
 </testcase>
   <testcase 
-  name="primes should generate the correct sequence of prime numbers" classname="q2.Q2Test" time="0.001">
+  name="primes should generate the correct sequence of prime numbers" classname="q2.Q2Test" time="0.0">
 </testcase>
   <testcase 
-  name="primesWithUnfold should generate the correct sequence of prime numbers" classname="q2.Q2Test" time="0.015">
+  name="primesWithUnfold should generate the correct sequence of prime numbers" classname="q2.Q2Test" time="0.0">
 </testcase>
   <testcase 
   name="primesWithoutUnfold should generate the correct sequence of prime numbers" classname="q2.Q2Test" time="0.001">

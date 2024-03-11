@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuite 
-errors="0" failures="0" hostname="unknown" name="q3.Q3Test" tests="2" time="0.167" timestamp="2024-03-10T22:28:27">
+errors="0" failures="0" hostname="unknown" name="q3.Q3Test" tests="2" time="0.131" timestamp="2024-03-10T22:36:18">
   <properties>
     <property name="jline.esc.timeout" value="0"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
@@ -49,7 +49,7 @@ errors="0" failures="0" hostname="unknown" name="q3.Q3Test" tests="2" time="0.16
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="/opt/openjdk-bin-8.382_p05/jre"/>
     <property
-    name="sun.java.command" value="/usr/share/sbt/lib/sbt-launch.jar test"/>
+    name="sun.java.command" value="/usr/share/sbt/lib/sbt-launch.jar test --all"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
@@ -69,10 +69,10 @@ errors="0" failures="0" hostname="unknown" name="q3.Q3Test" tests="2" time="0.16
     <property name="sun.cpu.isalist" value=""/>
   </properties>
   <testcase 
-  name="pyth should generate correct Pythagorean triples up to a limit" classname="q3.Q3Test" time="0.081">
+  name="pyth should generate correct Pythagorean triples up to a limit" classname="q3.Q3Test" time="0.055">
 </testcase>
   <testcase 
-  name="pythUnfold should generate correct Pythagorean triples up to a limit using unfold" classname="q3.Q3Test" time="0.022">
+  name="pythUnfold should generate correct Pythagorean triples up to a limit using unfold" classname="q3.Q3Test" time="0.021">
 </testcase>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
