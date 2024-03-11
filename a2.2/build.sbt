@@ -9,4 +9,4 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.9" % Test
 
 testOptions in Test += Tests.Argument(
   TestFrameworks.ScalaTest, 
-  "-u", "target/test-reports")
+  "-u", "tests/test-reports")
