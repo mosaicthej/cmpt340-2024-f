@@ -1,0 +1,9 @@
+Is_Charles_the_Step_Father_of_Catherine = no.
+
+Grandchildren_of_Diana = [george, louis, charlotte, archie, lilibet].
+
+Senior_Royal_Descendants_of_Charles = [william, george, charlotte, louis].
+
+Biological_Parents_of_William_and_Harry = [charles, diana|_] 
+Who_Has_a_Brother = [william, harry, george, louis, lilibet, charlotte|_] 
+
