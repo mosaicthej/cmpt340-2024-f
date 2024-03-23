@@ -1,0 +1,44 @@
+[0m[[0minfo[0m] [0mLoading project definition from /home/mosaic/340/a2.2/project/project[0m
+[0m[[0minfo[0m] [0mLoading project definition from /home/mosaic/340/a2.2/project[0m
+[0m[[32msuccess[0m] [0mGenerated .bloop/a2-2-build.json[0m
+[0m[[32msuccess[0m] [0mTotal time: 0 s, completed Mar 10, 2024 10:37:49 PM[0m
+[0m[[0minfo[0m] [0mSet current project to Assignment2-2 (in build file:/home/mosaic/340/a2.2/)[0m
+iterateUsingUnfold example: List(1, 2, 3, 4, 5)
+iterateWithoutUnfold example: List(1, 2, 4, 8, 16)
+iterateUsingUnfold and iterateWithoutUnfold example: List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+iterateUsingUnfold and iterateWithoutUnfold example: List(13, 26, 52, 104, 208, 416, 832, 1664, 3328, 6656, 13312, 26624, 53248, 106496, 212992, 425984, 851968, 1703936, 3407872, 6815744, 13631488, 27262976, 54525952, 109051904, 218103808, 436207616, 872415232, 1744830464, -805306368, -1610612736)
+[0m[[0minfo[0m] [0m[32mQ2Test:[0m[0m
+[0m[[0minfo[0m] [0m[32munfold[0m[0m
+[0m[[0minfo[0m] [0m[32m- should correctly generate sequences[0m[0m
+[0m[[0minfo[0m] [0m[32miterateUsingUnfold[0m[0m
+[0m[[0minfo[0m] [0m[32m- should generate an incremental sequence[0m[0m
+[0m[[0minfo[0m] [0m[32miterateWithoutUnfold[0m[0m
+[0m[[0minfo[0m] [0m[32m- should generate an incremental sequence[0m[0m
+[0m[[0minfo[0m] [0m[32misCoPrimeWith[0m[0m
+[0m[[0minfo[0m] [0m[32m- should determine coprimality correctly[0m[0m
+[0m[[0minfo[0m] [0m[32mprimes[0m[0m
+[0m[[0minfo[0m] [0m[32m- should generate the correct sequence of prime numbers[0m[0m
+[0m[[0minfo[0m] [0m[32mprimesWithUnfold[0m[0m
+[0m[[0minfo[0m] [0m[32m- should generate the correct sequence of prime numbers[0m[0m
+[0m[[0minfo[0m] [0m[32mprimesWithoutUnfold[0m[0m
+[0m[[0minfo[0m] [0m[32m- should generate the correct sequence of prime numbers[0m[0m
+[0m[[0minfo[0m] [0m[32mProblem1Test:[0m[0m
+[0m[[0minfo[0m] [0m[32miterateUsingUnfold[0m[0m
+[0m[[0minfo[0m] [0m[32m- should generate the correct LazyList[0m[0m
+[0m[[0minfo[0m] [0m[32miterateWithoutUnfold[0m[0m
+[0m[[0minfo[0m] [0m[32m- should generate the correct LazyList[0m[0m
+[0m[[0minfo[0m] [0m[32miterateWithoutUnfold and iterateUsingUnfold[0m[0m
+[0m[[0minfo[0m] [0m[32m- should generate the same LazyList 1[0m[0m
+[0m[[0minfo[0m] [0m[32miterateWithoutUnfold and iterateUsingUnfold[0m[0m
+[0m[[0minfo[0m] [0m[32m- should generate the same LazyList 2[0m[0m
+[0m[[0minfo[0m] [0m[32mQ3Test:[0m[0m
+[0m[[0minfo[0m] [0m[32mpyth[0m[0m
+[0m[[0minfo[0m] [0m[32m- should generate correct Pythagorean triples up to a limit[0m[0m
+[0m[[0minfo[0m] [0m[32mpythUnfold[0m[0m
+[0m[[0minfo[0m] [0m[32m- should generate correct Pythagorean triples up to a limit using unfold[0m[0m
+[0m[[0minfo[0m] [0m[36mRun completed in 536 milliseconds.[0m[0m
+[0m[[0minfo[0m] [0m[36mTotal number of tests run: 13[0m[0m
+[0m[[0minfo[0m] [0m[36mSuites: completed 3, aborted 0[0m[0m
+[0m[[0minfo[0m] [0m[36mTests: succeeded 13, failed 0, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0minfo[0m] [0m[32mAll tests passed.[0m[0m
+[0m[[32msuccess[0m] [0mTotal time: 1 s, completed Mar 10, 2024 10:37:51 PM[0m
