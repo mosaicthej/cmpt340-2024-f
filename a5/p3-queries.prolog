@@ -37,6 +37,7 @@ descendant_of(D, A):-
   parent_of(A, D).
 
 % transitive closure.
+% using this would avoid infinite loop.
 descendant_of(D, A):-
   parent_of(A, X),
   descendant_of(D, X).

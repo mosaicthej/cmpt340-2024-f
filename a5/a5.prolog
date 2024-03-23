@@ -27,14 +27,16 @@
 % Represent the facts in the graph shown above using facts in Prolog, 
 % limiting yourself to the six predicates listed above.
 
-ever_married_to_base(diana, charles).
-ever_married_to_base(william, catherine).
-ever_married_to_base(harry, meghan).
-
-ever_married_to(X,Y):-
-  ever_married_to_base(X, Y);
-  ever_married_to_base(Y, X).
-
+% ever_married_to_base(diana, charles).
+% ever_married_to_base(william, catherine).
+% ever_married_to_base(harry, meghan).
+wife_of(dianna, charles).
+wife_of(catherine, william).
+wife_of(meghan, harry).
+% reflexive closure.
+% doing this would avoid infinite loops in the graph
+ever_married_to(X,Y):- wife_of(X,Y).
+ever_married_to(X,Y):- wife_of(Y,X).
 
 son_of(william, diana). 
 son_of(william, charles).
