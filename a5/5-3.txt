@@ -1,61 +1,64 @@
-% Write Prolog queries to ask the following questions. 
-% You may use all thirteen predicates above; 
-% assume that you have correct solutions to Problems 1 and 2.  
-[user].
-  % to remove duplicates of any results.
-  % do this:
-  % get_unique_list(+DupList, -UniqueList).
-  % precondition: UniqueList does not have any duplicates.
-  get_unique_list([], _).
-  get_unique_list([H|T], UniqueList) :- 
-    \+  member(H, UniqueList), 
-    get_unique_list(T, [H|UniqueList]).
-  get_unique_list([H|T], UniqueList) :- 
-    member(H, UniqueList), 
-    get_unique_list(T, UniqueList).
-
-  % get all results of a query without duplicates
-  % get_all_results(+Template, +Predicate, -Results)
-  get_all_results(Template, Predicate, Results) :- 
-    findall(Template, Predicate, DupResults), 
-    get_unique_list(DupResults, Results).
-  
-  end_of_file.
-
-[user].
-  query_a:- ever_married_to(charles, Mo),
-    parent_of(Mo, catherine),
-    not(father_of(charles, catherine)).
-  end_of_file.
-
+% needs list processing helpers:
+% to remove duplicates of any results.
+% do this:
+% get_unique_list(+DupList, -UniqueList).
+% precondition: UniqueList does not have any duplicates.
+% get_unique_list([], _).
+% get_unique_list([H|T], UniqueList) :- 
+%   \+  member(H, UniqueList), 
+%   get_unique_list(T, [H|UniqueList]).
+% get_unique_list([H|T], UniqueList) :- 
+%   member(H, UniqueList), 
+%   get_unique_list(T, UniqueList).
+% 
+% 
 % a) Is Charles the step father of Catherine? [should respond with no]
-query_a.
-
-
+% sln_a:- 
+%     ever_married_to(charles, Mo),
+%     parent_of(Mo, catherine),
+%     not(father_of(charles, catherine)).
+% query_a(Res):-
+%   sln_a, Res = yes.
+% query_a(Res):-
+%   \+ sln_a, Res = no.
+% 
+query_a(Is_Charles_the_Step_Father_of_Catherine).
+% 
 % b) Who are the grandchildren of Diana? 
 % [should respond with George, Charlotte, Louis, Archie and Lilibet]
-mother_of(diana, PA),
-  parent_of(PA, Chl).
-
+% query_b(Chl):-
+%   {Chl}/(mother_of(diana, P),
+%   parent_of(P, Chl)).
+findall(R, query_b(R), 
+   Grandchildren_of_Diana).
+% 
 % c) Who are the senior royal descendants of Charles? 
 % [should respond with William, George, Charlotte and Louis]
-{SR}/(senior_royal(SR),
-  parent_of(charles, SR);
-senior_royal(SR),
-  parent_of(charles, _P),
-  parent_of(_P, SR)).
-
+% query_c(SR):-
+%   {SR}/
+%   ( senior_royal(SR),
+%       parent_of(charles, SR);
+%     senior_royal(SR),
+%       parent_of(charles, _P),
+%       parent_of(_P, SR)).
+findall(R, query_c(R), 
+  Senior_Royal_Descendants_of_Charles).
+% 
 % d) Who are the biological parents of both William and Harry? 
 % [should respond with Charles and Diana]
-parents_of(Fa, Ma, william), parents_of(Fa, Ma, harry).
-
-% d2) Who has a brother? 
-% [should respond with William, Harry, George and Louis]
-parent_of(Pa, X), son_of(Pa, Bro), X \= Bro.
-
-{X}/(parent_of(Pa, X), son_of(Pa, Bro), X \= Bro).
-
-% who is a brother? (this should return William, Harry, George, Louis)
-{B}/(parent_of(Pa, B), son_of(Pa, Bro), B \= Bro).
-
+% sln_d(P):-
+%   father_of(p,william); father_of(p, william);
+%   mother_of(p, william); mother_of(p, william).
+% query_d(slnlist):-
+%   findall(p, sln_d(p), dupl),
+%   get_unique_list(dupl, slnlist).
+query_d(Biological_Parents_of_William_and_Harry).
+ 
+% 
+% e) Who has a brother?
+% [should respond with William, Harry, George, Louis, Lilibet, Charlotte]
+% query_e(BL):-
+%   findall(B, sln_e(B), DL),
+%   get_unique_list(DL, BL).
+query_e(Who_Has_a_Brother).
 

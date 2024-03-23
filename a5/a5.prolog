@@ -172,23 +172,3 @@ stepmother_of(StM, Chl) :-
   parent_of(Prnt, Chl), 
   not(mother_of(StM, Chl)).
 
-
-
-% to remove duplicates of any results.
-% do this:
-% get_unique_list(+DupList, -UniqueList).
-% precondition: UniqueList does not have any duplicates.
-get_unique_list([], _).
-get_unique_list([H|T], UniqueList) :- 
-  \+  member(H, UniqueList), 
-  get_unique_list(T, [H|UniqueList]).
-get_unique_list([H|T], UniqueList) :- 
-  member(H, UniqueList), 
-  get_unique_list(T, UniqueList).
-
-% get all results of a query without duplicates
-% get_all_results(+Template, +Predicate, -Results)
-get_all_results(Template, Predicate, Results) :- 
-  findall(Template, Predicate, DupResults), 
-  get_unique_list(DupResults, Results).
-
