@@ -86,3 +86,38 @@
  *      nth card blocked by (n-1)th Ack
  */
 
+package shuffleActor
+
+import akka.actor._
+import scala.sys.Prop
+import akka.event.Logging
+import com.typesafe.config.ConfigFactory
+
+
+object CardT {
+  case class Card(card: Any)
+  case class Deck(deck: List[Card])
+  case class Ack(seq: Int)
+}
+
+object IsOutT {case class IsOut(isOut: Boolean)}
+
+object ShuffleActor {
+  import CardT._
+  import IsOutT._
+  def props(): Props = Props(new ShuffleActor())
+  case class ShuffleReq(deck: List[Card], sTime: Int, isOut: IsOut)
+}
+
+object SplitterActor {
+  import CardT._
+  def props(): Props = Props(new SplitterActor())
+  case class SplitterReq(deck: List[Card], fsName: ActorRef)
+}
+
+object FaroShuffler {
+  import CardT._
+  import IsOutT._
+  def props(): Props = Props(new FaroShuffler())
+}
+
