@@ -1,5 +1,3 @@
-import akka.actor._
-import scala.sys.Prop
 
 /*
  * Problem 1 (50 Points): Fibonacci Numbers.  
@@ -104,11 +102,14 @@ package fibActor
 
 import akka.actor._
 import scala.sys.Prop
+import akka.event.Logging
+import com.typesafe.config.ConfigFactory
 
 object FibActor {
   def props(): Props = Props(new FibActor())
   case class Req(x: Int)
   case class Res(x: Int)
+  /* different types of wrappers */
 }
 
 class FibActor extends Actor {
@@ -123,33 +124,55 @@ class FibActor extends Actor {
   var hasFirstRes: Boolean = false
   var stackDepth: Int = 0
   var foreignSender: ActorRef = null
+  val log = Logging(context.system, this)
+  override def preStart() = {
+    log.debug("Starting, I am at [{}]", self.path)
+  }
+  override def preRestart(reason: Throwable, message: Option[Any]): Unit = {
+    log.error(reason, "Restarting due to [{}] when processing [{}]", reason.getMessage, message.getOrElse(""))
+  }
   def receive: PartialFunction[Any, Unit] = {
     case Req(x) =>
+      log.debug("{} Received Req({}) from {} at stackDepth {}",
+        self.path, x, sender.path, stackDepth)
+      
       /* first initialized, being called by foreign  */
       if (stackDepth == 0) foreignSender = sender
       if (x < 2) {
         /* base case */
+        stackDepth -= 1
         sender ! Res(x) /* reply to sender directly */
+        log.debug("{}: Base case: sent Res({}) to {}", self.path, x, sender.path)
       } else {
         /* non-base case:
          * request (x-2) from new actor (create one) 
          * request (x-1) from itself
          * */
-        context.actorOf(FibActor.props()) ! Req(x-1)
-        self ! Req(x-2)
+        context.actorOf(FibActor.props()) ! Req(x-2)
+        log.debug("{}: sent Req({}) to new actor", self.path, x-2)
+        self ! Req(x-1)
+        log.debug("{}: sent Req({}) to myself", self.path, x-1)
         stackDepth += 1 /* since called itself, 
         add 1 to depth */
       }
     case Res(x) =>
       accu += x
+      log.debug("{}, accu: {}, hasFirstRes: {} at stackDepth {}",
+        self.path + ": Received Res(" + x + ") from " + sender.path, 
+        accu, hasFirstRes, 
+        stackDepth)
       if (hasFirstRes) {
         /* now ready to reply with accu, who to reply to?
          * -> if stackDepth=0, reply to foreign
          * -> otherwise, reply to self */
-        if (stackDepth == 0) foreignSender ! Res(accu)
+        if (stackDepth == 0) {foreignSender ! Res(accu)
+          log.debug("{}: sent Res({}) to {}", 
+            self.path, accu, foreignSender.path)}
         else { self ! Res(accu)
+          log.debug("{}: sent Res({}) to {}", 
+            self.path, accu, self.path)
               stackDepth -= 1 }
-        accu = 0
+        accu = 0 /* reset */
       }
       hasFirstRes = !hasFirstRes /* toggle */
   }
