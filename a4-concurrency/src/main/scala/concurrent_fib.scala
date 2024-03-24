@@ -1,5 +1,3 @@
-import akka.actor._
-import scala.sys.Prop
 
 /*
  * Problem 1 (50 Points): Fibonacci Numbers.  
@@ -109,6 +107,7 @@ object FibActor {
   def props(): Props = Props(new FibActor())
   case class Req(x: Int)
   case class Res(x: Int)
+  /* different types of wrappers */
 }
 
 class FibActor extends Actor {
@@ -150,6 +149,7 @@ class FibActor extends Actor {
         else { self ! Res(accu)
               stackDepth -= 1 }
         accu = 0
+        accu = 0 /* reset */
       }
       hasFirstRes = !hasFirstRes /* toggle */
   }
