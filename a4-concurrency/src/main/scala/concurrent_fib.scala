@@ -140,6 +140,7 @@ class FibActor extends Actor {
       if (stackDepth == 0) foreignSender = sender
       if (x < 2) {
         /* base case */
+        stackDepth -= 1
         sender ! Res(x) /* reply to sender directly */
         log.debug("{}: Base case: sent Res({}) to {}", self.path, x, sender.path)
       } else {
