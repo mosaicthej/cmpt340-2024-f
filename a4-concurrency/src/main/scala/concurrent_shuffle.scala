@@ -128,3 +128,26 @@ object CardCollectorActor {
 }
 
 
+class ShuffleActor extends Actor {
+/* ShuffleActor:
+ * Init all things, and only actor that
+ *   tracks the number of shuffles done.
+ * */
+  import ShuffleActor._
+  import CardT._
+  
+  var splitter: ActorRef = null
+  var faroShuffler: ActorRef = null
+  var cardCollector: ActorRef = null
+  var client: ActorRef = null
+  var isOut: Boolean = false
+  val log = Logging(context.system, this)
+  var nshuffles: Int = -1
+  override def preStart() = {
+    log.debug("Starting, I am at [{}]", self.path)
+  }
+  override def preRestart(reason: Throwable, message: Option[Any]): Unit = {
+    log.error(reason, "Restarting due to [{}] when processing [{}]", 
+      reason.getMessage, message.getOrElse(""))
+  }
+}
