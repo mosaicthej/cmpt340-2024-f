@@ -77,13 +77,18 @@
  *     Sends:
  *       - Deck (to shuffler)
  *
- *
+ *  Note 1:
  *  Some operations needs to ensure the order:
  *    Splitter -> FaroShuffler 
  *      (2nd Deck blocked by 1st Ack)
  *    FaroShuffler -> CardCollector
  *      1st card blocked by 0th Ack (header)
  *      nth card blocked by (n-1)th Ack
+ *
+ *  Note 2:
+ *  We don't want to kill the actors and then restart them.
+ *  A flag in FaroShuffler so we don't redo CC.
+ *  
  */
 
 package shuffleActor
