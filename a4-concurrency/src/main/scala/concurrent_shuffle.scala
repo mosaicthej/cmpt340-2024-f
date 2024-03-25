@@ -229,3 +229,127 @@ class SplitterActor extends Actor {
       log.error("SplitterActor: wtf")
   }
 }
+
+class FaroShufflerActor extends Actor {
+  /* FaroShufflerActor:
+   * Shuffles the deck and sends to CardCollector.
+   * */
+  import CardT._
+  import FaroShufflerActor._
+  var isOut: Boolean = false
+  var cardCollector: ActorRef = null
+  var sName: ActorRef = null
+  var nCards: Int = -1
+  var deck1: Option[Deck] = None
+  var deck2: Option[Deck] = None
+  var hasDeck1: Boolean = false /* set after ACK 1st deck */
+  var hasInitCC: Boolean = false /* set after init CardCollector */
+  var hasOrder: Boolean = false /* set after received from shuffler */
+  var hasBothDecks: Boolean = false /* set after received both decks */
+  var nextDeckOne: Boolean = false /* alternate between decks */
+  val log = Logging(context.system, this)
+  override def preStart() = {
+    log.debug("Starting, I am at [{}]", self.path)
+  }
+  override def preRestart(reason: Throwable, message: Option[Any]): Unit = {
+    log.error(reason, "Restarting due to [{}] when processing [{}]", 
+      reason.getMessage, message.getOrElse(""))
+  }
+  def sendHeader() = {
+    if (hasInitCC) {
+      cardCollector ! FStoCCHeader(sName, nCards)
+      hasOrder = false
+      hasBothDecks = false
+      hasDeck1 = false /* reset */
+    } else {
+      log.error("FaroShufflerActor: wtf, no init CC")
+    }
+  }
+  def sendCard() : Unit = {
+    if (nextDeckOne) {
+      deck1 match {
+        case Some(Deck(cards)) =>
+          if (cards.isEmpty) {
+            log.error("FaroShufflerActor: wtf, empty deck1")
+          } else {
+            cardCollector ! Card(cards.head)
+            deck1 = Some(Deck(cards.tail))
+          }
+        case None =>
+          log.error("FaroShufflerActor: wtf, deck1 is None")
+        case _ =>
+          log.error("FaroShufflerActor: wtf, deck1 is corrupted")
+      }
+    }
+    else {
+      deck2 match {
+        case Some(Deck(cards)) =>
+          if (cards.isEmpty) {
+            log.error("FaroShufflerActor: wtf, empty deck2")
+          } else {
+            cardCollector ! Card(cards.head)
+            deck2 = Some(Deck(cards.tail))
+          }
+        case None =>
+          log.error("FaroShufflerActor: wtf, deck2 is None")
+        case _ =>
+          log.error("FaroShufflerActor: wtf, deck2 is corrupted")
+      }
+    }
+    nextDeckOne = !nextDeckOne
+  }
+
+  def receive: PartialFunction[Any, Unit] = {
+    case StoFSReq(isOut) =>
+      log.debug("{} Received StoFSReq from {}", self.path, sender.path)
+      this.isOut = isOut
+      this.nextDeckOne = isOut /* outshuffle -> starting from D1 */
+      this.hasOrder = true
+      if (!hasInitCC) {
+        cardCollector = context.actorOf(CardCollectorActor.props())
+        hasInitCC = true }
+      /* if have both decks, ready to send then */ 
+      if (hasBothDecks) {
+        sendHeader()
+      }
+      
+    case Deck(cards) if !hasDeck1 =>
+      /* this is 1st message from Splitter.
+       * needs to send ack to Splitter */
+      this.hasDeck1 = true
+      this.deck1 = Some(Deck(cards))
+      sender ! Ack(7)
+
+    case Deck(cards) if (hasDeck1 && !hasBothDecks) =>
+      /* this is 2nd message from Splitter.
+      * if we have the order, can get ready to send to CC */
+      this.deck2 = Some(Deck(cards))
+      this.hasBothDecks = true
+      if (hasOrder) { /* send header to CC */
+        sendHeader()
+      }
+
+    case Ack(seq) if seq == 0 => /* on ack header */
+      log.debug("{} Received Ack from {}", self.path, sender.path)
+      /* now send */
+      sendCard()
+
+    case Ack(seq) if 0 < seq && seq < nCards =>
+      log.debug("{} Received Ack from {}", self.path, sender.path)
+      sendCard()
+
+    case Ack(seq) if seq == nCards =>
+      log.debug("{} Received Ack from {}", self.path, sender.path)
+      if (deck1.get.deck.isEmpty && deck2.get.deck.isEmpty) {
+      log.debug("All cards sent to CC")
+      } else {
+      log.error("FaroShufflerActor: wtf, not all cards sent to CC")
+      }
+
+    case Ack(seq) if seq < 0 || seq > nCards =>
+      log.error("FaroShufflerActor: wtf, corrupted ack. Sender is {}", sender.path)
+
+    case _ =>
+      log.error("FaroShufflerActor: wtf")
+  }
+}
