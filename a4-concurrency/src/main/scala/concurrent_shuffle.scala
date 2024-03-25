@@ -192,8 +192,9 @@ class SplitterActor extends Actor {
   /* SplitterActor:
    * Splits the deck into two and sends to faroShuffler.
    * */
-  var d1: List[CardT.Card] = Nil
-  var d2: List[CardT.Card] = Nil
+  import CardT._
+  var hasAckDeck1: Boolean = false
+  var secondHalfDeck : Option[Deck] = None
   var fsName: ActorRef = null
   val log = Logging(context.system, this)
   override def preStart() = {
@@ -208,11 +209,23 @@ class SplitterActor extends Actor {
     case SplitterActor.SplitterReq(deck, fsName) =>
       log.debug("{} Received SplitterReq from {}", self.path, sender.path)
       this.fsName = fsName
+      hasAckDeck1 = false /* reset */ 
       val (d1, d2) = deck.deck.splitAt(deck.deck.length/2)
-      this.d1 = d1
-      this.d2 = d2
-      fsName ! CardT.Deck(d1)
-      fsName ! CardT.Deck(d2)
+      /* send the 1st half, wait for the ack */
+      fsName ! d1
+      secondHalfDeck = Some(Deck(d2))
+
+    case Ack(seq) if seq == 7 =>
+      log.debug("{} Received Ack from {}", self.path, sender.path)
+      hasAckDeck1 = true
+      if (secondHalfDeck.isDefined) {
+        fsName ! secondHalfDeck.get
+        secondHalfDeck = None /* reset */ 
+      }
+      
+    case Ack(seq) if seq != 7 =>
+      log.error("SplitterActor: corrupted ack, wtf. Sender is {}", sender.path)
+    case _ =>
+      log.error("SplitterActor: wtf")
   }
-  
 }
