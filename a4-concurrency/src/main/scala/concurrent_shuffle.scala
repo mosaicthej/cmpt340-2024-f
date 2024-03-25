@@ -110,13 +110,13 @@ object ShuffleActor {
   import CardT.Deck
   import FaroShufflerActor.StoFSReq
   def props(): Props = Props(new ShuffleActor())
-  case class ShuffleReq(deck: List[Card], sTime: Int, isOut: Boolean)
+  case class ShuffleReq(deck: Deck, sTime: Int, isOut: Boolean)
 }
 
 object SplitterActor {
-  import CardT._
+  import CardT.Deck
   def props(): Props = Props(new SplitterActor())
-  case class SplitterReq(deck: List[Card], fsName: ActorRef)
+  case class SplitterReq(deck: Deck, fsName: ActorRef)
 }
 
 object FaroShufflerActor {
@@ -174,13 +174,13 @@ class ShuffleActor extends Actor {
       splitter ! SplitterActor.SplitterReq(deck, faroShuffler)
       faroShuffler ! FaroShufflerActor.StoFSReq(isOut)
     
-    case Deck(deck) =>
+    case Deck(cards) =>
       log.debug("{} Received Deck from {}", self.path, sender.path)
       nshuffles -= 1
       if (nshuffles == 0) {
-        client ! Deck(deck)
+        client ! Deck(cards)
       } else {
-        splitter ! SplitterActor.SplitterReq(deck, faroShuffler)
+        splitter ! SplitterActor.SplitterReq(Deck(cards), faroShuffler)
         faroShuffler ! FaroShufflerActor.StoFSReq(this.isOut)
       }
     case _ =>
@@ -203,5 +203,4 @@ class SplitterActor extends Actor {
     log.error(reason, "Restarting due to [{}] when processing [{}]", 
       reason.getMessage, message.getOrElse(""))
   }
-
 }
