@@ -353,3 +353,51 @@ class FaroShufflerActor extends Actor {
       log.error("FaroShufflerActor: wtf")
   }
 }
+
+
+class CardCollectorActor extends Actor {
+  /* CardCollectorActor:
+   * Collects the shuffled deck and sends to shuffler.
+   * */
+  import CardT._
+  import FaroShufflerActor.FStoCCHeader
+  var sName: ActorRef = null
+  var nCards: Int = -1
+  var cards: List[Card] = Nil
+  var hasHeader: Boolean = false
+  var ackSeq: Int = 0
+  val log = Logging(context.system, this)
+  override def preStart() = {
+    log.debug("Starting, I am at [{}]", self.path)
+  }
+  override def preRestart(reason: Throwable, message: Option[Any]): Unit = {
+    log.error(reason, "Restarting due to [{}] when processing [{}]", 
+      reason.getMessage, message.getOrElse(""))
+  }
+
+  def receive: PartialFunction[Any, Unit] = {
+    case FStoCCHeader(sName, nCards) =>
+      log.debug("{} Received FStoCCHeader from {}",
+        self.path, sender.path)
+      this.sName = sName
+      this.nCards = nCards
+      hasHeader = true
+      ackSeq = 0
+      sender ! Ack(ackSeq)
+
+    case Card(card) if hasHeader =>
+      log.debug("{} Received Card from {}", self.path, sender.path)
+      cards = Card(card) :: cards
+      ackSeq += 1
+      if (ackSeq == nCards) {
+        sName ! Deck(cards)
+      } 
+      sender ! Ack(ackSeq)
+
+    case Card(card) if !hasHeader =>
+      log.error("CardCollectorActor: wtf, cards before header")
+
+    case _ =>
+      log.error("CardCollectorActor: wtf")
+  }
+}
