@@ -182,6 +182,8 @@ class ShuffleActor extends Actor {
       } else {
         splitter ! SplitterActor.SplitterReq(deck, faroShuffler)
         faroShuffler ! FaroShufflerActor.StoFSReq(this.isOut)
-      }  
+      }
+    case _ =>
+      log.error("ShuffleActor: wtf")
   }
 }
