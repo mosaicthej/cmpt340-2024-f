@@ -169,5 +169,14 @@ class ShuffleActor extends Actor {
       splitter ! SplitterActor.SplitterReq(deck, faroShuffler)
       faroShuffler ! FaroShufflerActor.StoFSReq(isOut)
     
+    case Deck(deck) =>
+      log.debug("{} Received Deck from {}", self.path, sender.path)
+      nshuffles -= 1
+      if (nshuffles == 0) {
+        client ! Deck(deck)
+      } else {
+        splitter ! SplitterActor.SplitterReq(deck, faroShuffler)
+        faroShuffler ! FaroShufflerActor.StoFSReq(this.isOut)
+      }  
   }
 }
