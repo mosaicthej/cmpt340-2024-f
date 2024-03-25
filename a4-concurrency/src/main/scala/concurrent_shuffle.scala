@@ -150,4 +150,13 @@ class ShuffleActor extends Actor {
     log.error(reason, "Restarting due to [{}] when processing [{}]", 
       reason.getMessage, message.getOrElse(""))
   }
+  
+  def receive: PartialFunction[Any, Unit] = {
+    /* Two cases:
+     * 1. ShuffleReq: 
+     *  - new request from client (including init)
+     * 2. Deck:
+     *  - when CardCollector sends the shuffled deck
+     */
+  }
 }
