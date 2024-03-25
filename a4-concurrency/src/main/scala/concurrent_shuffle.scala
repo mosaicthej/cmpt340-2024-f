@@ -176,6 +176,7 @@ class ShuffleActor extends Actor {
     
     case Deck(cards) =>
       log.debug("{} Received Deck from {}", self.path, sender.path)
+      log.debug("now the deck is {}", cards)
       nshuffles -= 1
       if (nshuffles == 0) {
         client ! Deck(cards)
@@ -400,4 +401,15 @@ class CardCollectorActor extends Actor {
     case _ =>
       log.error("CardCollectorActor: wtf")
   }
+}
+
+object DeckGenerator {
+  val suits = List("Hearts", "Diamonds", "Clubs", "Spades")
+  val ranks = List("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A")
+
+  import CardT.Card
+  def generateDeck: List[Card] = for {
+    suit <- suits
+    rank <- ranks
+  } yield Card(s"$rank of $suit")
 }
