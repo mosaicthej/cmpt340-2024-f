@@ -203,4 +203,16 @@ class SplitterActor extends Actor {
     log.error(reason, "Restarting due to [{}] when processing [{}]", 
       reason.getMessage, message.getOrElse(""))
   }
+  
+  def receive: PartialFunction[Any, Unit] = {
+    case SplitterActor.SplitterReq(deck, fsName) =>
+      log.debug("{} Received SplitterReq from {}", self.path, sender.path)
+      this.fsName = fsName
+      val (d1, d2) = deck.deck.splitAt(deck.deck.length/2)
+      this.d1 = d1
+      this.d2 = d2
+      fsName ! CardT.Deck(d1)
+      fsName ! CardT.Deck(d2)
+  }
+  
 }
