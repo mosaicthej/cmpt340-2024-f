@@ -100,13 +100,12 @@ object CardT {
   case class Ack(seq: Int)
 }
 
-object IsOutT {case class IsOut(isOut: Boolean)}
-
 object ShuffleActor {
-  import CardT._
-  import IsOutT._
+  import CardT.Card
+  import CardT.Deck
+  import FaroShufflerActor.StoFSReq
   def props(): Props = Props(new ShuffleActor())
-  case class ShuffleReq(deck: List[Card], sTime: Int, isOut: IsOut)
+  case class ShuffleReq(deck: List[Card], sTime: Int, isOut: Boolean)
 }
 
 object SplitterActor {
@@ -115,9 +114,17 @@ object SplitterActor {
   case class SplitterReq(deck: List[Card], fsName: ActorRef)
 }
 
-object FaroShuffler {
+object FaroShufflerActor {
   import CardT._
-  import IsOutT._
-  def props(): Props = Props(new FaroShuffler())
+  def props(): Props = Props(new FaroShufflerActor())
+  case class FStoCCHeader(sName: ActorRef, nCards: Int)
+  case class StoFSReq(isOut: Boolean)
 }
+
+object CardCollectorActor {
+  import CardT._
+  import FaroShufflerActor.FStoCCHeader
+  def props(): Props = Props(new CardCollectorActor())
+}
+
 
