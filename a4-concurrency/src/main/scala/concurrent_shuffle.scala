@@ -158,5 +158,16 @@ class ShuffleActor extends Actor {
      * 2. Deck:
      *  - when CardCollector sends the shuffled deck
      */
+    case ShuffleReq(deck, sTime, isOut) =>
+      log.debug("{} Received ShuffleReq from {}", self.path, sender.path)
+      client = sender
+      nshuffles = sTime
+      this.isOut = isOut
+      splitter = context.actorOf(SplitterActor.props())
+      faroShuffler = context.actorOf(FaroShufflerActor.props())
+      /* init all the actors */
+      splitter ! SplitterActor.SplitterReq(deck, faroShuffler)
+      faroShuffler ! FaroShufflerActor.StoFSReq(isOut)
+    
   }
 }
