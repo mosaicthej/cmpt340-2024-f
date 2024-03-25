@@ -187,3 +187,21 @@ class ShuffleActor extends Actor {
       log.error("ShuffleActor: wtf")
   }
 }
+
+class SplitterActor extends Actor {
+  /* SplitterActor:
+   * Splits the deck into two and sends to faroShuffler.
+   * */
+  var d1: List[CardT.Card] = Nil
+  var d2: List[CardT.Card] = Nil
+  var fsName: ActorRef = null
+  val log = Logging(context.system, this)
+  override def preStart() = {
+    log.debug("Starting, I am at [{}]", self.path)
+  }
+  override def preRestart(reason: Throwable, message: Option[Any]): Unit = {
+    log.error(reason, "Restarting due to [{}] when processing [{}]", 
+      reason.getMessage, message.getOrElse(""))
+  }
+
+}
